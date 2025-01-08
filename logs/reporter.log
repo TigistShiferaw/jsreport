@@ -1,318 +1,61 @@
-2025-01-08T11:10:59.592Z - info: Initializing jsreport (version: 4.7.0, configuration file: none, nodejs: 20.11.1)
-2025-01-08T11:10:59.636Z - info: Searching for available extensions in C:\Users\hp\Desktop\
-2025-01-08T11:10:59.786Z - info: Extensions location cache doesn't contain entry yet, crawling
-2025-01-08T11:12:50.550Z - info: Initializing jsreport (version: 4.7.0, configuration file: none, nodejs: 20.11.1)
-2025-01-08T11:12:50.555Z - info: Searching for available extensions in C:\Users\hp\Desktop\
-2025-01-08T11:12:50.569Z - info: Extensions location cache doesn't contain entry yet, crawling
-2025-01-08T11:13:05.747Z - info: Initializing jsreport (version: 4.7.0, configuration file: none, nodejs: 20.11.1)
-2025-01-08T11:13:05.758Z - info: Searching for available extensions in C:\Users\hp\Desktop\
-2025-01-08T11:13:05.766Z - info: Extensions location cache doesn't contain entry yet, crawling
-2025-01-08T11:14:20.247Z - info: Initializing jsreport (version: 4.7.0, configuration file: none, nodejs: 20.11.1)
-2025-01-08T11:14:20.254Z - info: Searching for available extensions in C:\Users\hp\Desktop\
-2025-01-08T11:14:20.274Z - info: Extensions location cache doesn't contain entry yet, crawling
-2025-01-08T11:16:59.021Z - info: Initializing jsreport (version: 4.7.0, configuration file: none, nodejs: 20.11.1)
-2025-01-08T11:16:59.029Z - info: Searching for available extensions in C:\Users\hp\Desktop\
-2025-01-08T11:16:59.038Z - info: Extensions location cache doesn't contain entry yet, crawling
-2025-01-08T11:18:05.349Z - info: Initializing jsreport (version: 4.7.0, configuration file: none, nodejs: 20.11.1)
-2025-01-08T11:18:05.358Z - info: Searching for available extensions in C:\Users\hp\Desktop\
-2025-01-08T11:18:05.380Z - info: Extensions location cache doesn't contain entry yet, crawling
-2025-01-08T11:21:27.240Z - info: Initializing jsreport (version: 4.7.0, configuration file: none, nodejs: 20.11.1)
-2025-01-08T11:21:27.245Z - info: Searching for available extensions in C:\Users\hp\Desktop\
-2025-01-08T11:21:27.261Z - info: Extensions location cache doesn't contain entry yet, crawling
-2025-01-08T11:29:40.622Z - info: Initializing jsreport (version: 4.7.0, configuration file: jsreport.config.json, nodejs: 20.11.1)
-2025-01-08T11:29:40.631Z - info: Searching for available extensions in C:\Users\hp\Desktop\competitoor\Dev\Jsreport template\jsreport\
-2025-01-08T11:29:40.645Z - info: Extensions location cache doesn't contain entry yet, crawling
-2025-01-08T11:29:44.444Z - info: Found 35 extension(s)
-2025-01-08T11:29:46.865Z - info: Using extension authentication@4.2.2
-2025-01-08T11:29:56.469Z - info: Using extension base@4.0.0
-2025-01-08T11:29:56.492Z - info: Using extension child-templates@4.1.0
-2025-01-08T11:29:56.511Z - info: Using extension cli@4.0.5
-2025-01-08T11:29:56.550Z - info: Using extension components@4.0.2
-2025-01-08T11:29:56.592Z - info: Using extension data@4.1.0
-2025-01-08T11:29:56.621Z - info: Using extension express@4.1.3
-2025-01-08T11:30:12.191Z - info: Using extension freeze@4.0.0
-2025-01-08T11:30:12.229Z - info: Using extension fs-store@4.0.5
-2025-01-08T11:30:18.566Z - info: Using extension handlebars@4.0.1
-2025-01-08T11:30:18.593Z - info: Using extension import-export@4.0.5
-2025-01-08T11:30:18.895Z - info: Using extension jsrender@4.0.0
-2025-01-08T11:30:18.917Z - info: Using extension licensing@4.0.3
-2025-01-08T11:30:18.953Z - info: Using extension localization@4.0.1
-2025-01-08T11:30:18.970Z - info: Using extension npm@4.0.0
-2025-01-08T11:30:19.000Z - info: Using extension pdf-utils@4.2.2
-2025-01-08T11:30:19.212Z - info: Using extension reports@4.1.2
-2025-01-08T11:30:19.788Z - info: Using extension tags@4.0.1
-2025-01-08T11:30:20.032Z - info: Using extension text@4.0.2
-2025-01-08T11:30:20.072Z - info: Using extension version-control@4.0.0
-2025-01-08T11:30:20.384Z - info: Using extension assets@4.2.0
-2025-01-08T11:30:20.701Z - info: Using extension authorization@4.0.1
-2025-01-08T11:30:20.840Z - info: Using extension browser-client@4.1.0
-2025-01-08T11:30:21.014Z - info: Using extension chrome-pdf@4.1.0
-2025-01-08T11:30:21.058Z - info: Using extension docx@4.6.0
-2025-01-08T11:30:21.087Z - info: Using extension html-to-xlsx@4.1.4
-2025-01-08T11:30:28.909Z - info: html-to-xlsx detected chrome as available html engine
-2025-01-08T11:30:28.911Z - info: Using extension pptx@4.3.2
-2025-01-08T11:30:28.940Z - info: Using extension scheduling@4.0.0
-2025-01-08T11:30:31.182Z - info: Using extension scripts@4.1.0
-2025-01-08T11:30:31.206Z - info: Using extension static-pdf@4.1.0
-2025-01-08T11:30:31.226Z - info: Using extension studio@4.2.0
-2025-01-08T11:30:34.601Z - info: Using extension xlsx@4.3.0
-2025-01-08T11:30:34.631Z - info: Using extension public-templates@4.0.0
-2025-01-08T11:30:34.663Z - info: Using extension sample-template@4.0.0
-2025-01-08T11:30:34.697Z - info: Using extension studio-theme-dark@4.0.0
-2025-01-08T11:30:34.730Z - info: Code sandboxing is disabled, users can potentially penetrate the local system if you allow code from external users to be part of your reports
-2025-01-08T11:30:34.731Z - info: Using general timeout for rendering (reportTimeout: 60000)
-2025-01-08T11:30:34.732Z - info: Using fs provider for template store.
-2025-01-08T11:30:34.752Z - info: fs store is persisting using fs for C:\Users\hp\Desktop\competitoor\Dev\Jsreport template\jsreport\data
-2025-01-08T11:30:34.780Z - info: fs store is loading data
-2025-01-08T11:30:34.818Z - info: fs store is initialized successfully
-2025-01-08T11:30:34.849Z - info: Creating default express app.
-2025-01-08T11:30:37.166Z - info: jsreport server successfully started on http port: 5488
-2025-01-08T11:30:37.169Z - info: Verifying license key free
-2025-01-08T11:30:37.171Z - info: Using free license
-2025-01-08T11:30:37.385Z - info: Migrating templates chrome settings (waitForNetworkIddle -> waitForNetworkIdle)
-2025-01-08T11:30:37.398Z - info: Migration successful
-2025-01-08T11:30:38.984Z - info: Initializing worker threads
-2025-01-08T11:30:44.674Z - info: 2 worker threads initialized in 5690ms
-2025-01-08T11:30:44.675Z - info: Starting temp files cleanup with 180000ms threshold
-2025-01-08T11:30:44.677Z - info: reporter initialized
-2025-01-08T11:31:13.775Z - info: Render request 1 queued for execution and waiting for available worker rootId=4wp5d07h0h76mat, id=4wp5d07h0h76mat
-2025-01-08T11:31:13.825Z - info: Starting rendering request 1 (user: tigist) rootId=4wp5d07h0h76mat, id=4wp5d07h0h76mat
-2025-01-08T11:31:13.828Z - info: Rendering template { name: test, recipe: chrome-pdf, engine: handlebars, preview: true } rootId=4wp5d07h0h76mat, id=4wp5d07h0h76mat
-2025-01-08T11:31:32.902Z - info: Rendering request 1 finished in 19133 ms rootId=4wp5d07h0h76mat, id=4wp5d07h0h76mat
-2025-01-08T11:35:34.393Z - info: Initializing jsreport (version: 4.7.0, configuration file: jsreport.config.json, nodejs: 20.11.1)
-2025-01-08T11:35:34.399Z - info: Searching for available extensions in C:\Users\hp\Desktop\competitoor\Dev\Jsreport template\jsreport\
-2025-01-08T11:35:34.409Z - info: Extensions location cache contains up to date information, skipping crawling in C:\Users\hp\Desktop\competitoor\Dev\Jsreport template\jsreport\
-2025-01-08T11:35:34.458Z - info: Found 35 extension(s)
-2025-01-08T11:35:34.603Z - info: Using extension authentication@4.2.2
-2025-01-08T11:35:34.935Z - info: Using extension base@4.0.0
-2025-01-08T11:35:34.942Z - info: Using extension child-templates@4.1.0
-2025-01-08T11:35:34.947Z - info: Using extension cli@4.0.5
-2025-01-08T11:35:34.955Z - info: Using extension components@4.0.2
-2025-01-08T11:35:34.960Z - info: Using extension data@4.1.0
-2025-01-08T11:35:34.962Z - info: Using extension express@4.1.3
-2025-01-08T11:35:36.451Z - info: Using extension freeze@4.0.0
-2025-01-08T11:35:36.457Z - info: Using extension fs-store@4.0.5
-2025-01-08T11:35:36.783Z - info: Using extension handlebars@4.0.1
-2025-01-08T11:35:36.786Z - info: Using extension import-export@4.0.5
-2025-01-08T11:35:36.810Z - info: Using extension jsrender@4.0.0
-2025-01-08T11:35:36.812Z - info: Using extension licensing@4.0.3
-2025-01-08T11:35:36.901Z - info: Using extension localization@4.0.1
-2025-01-08T11:35:36.904Z - info: Using extension npm@4.0.0
-2025-01-08T11:35:36.912Z - info: Using extension pdf-utils@4.2.2
-2025-01-08T11:35:36.916Z - info: Using extension reports@4.1.2
-2025-01-08T11:35:36.924Z - info: Using extension tags@4.0.1
-2025-01-08T11:35:36.927Z - info: Using extension text@4.0.2
-2025-01-08T11:35:36.928Z - info: Using extension version-control@4.0.0
-2025-01-08T11:35:36.945Z - info: Using extension assets@4.2.0
-2025-01-08T11:35:36.963Z - info: Using extension authorization@4.0.1
-2025-01-08T11:35:36.974Z - info: Using extension browser-client@4.1.0
-2025-01-08T11:35:36.980Z - info: Using extension chrome-pdf@4.1.0
-2025-01-08T11:35:36.985Z - info: Using extension docx@4.6.0
-2025-01-08T11:35:36.990Z - info: Using extension html-to-xlsx@4.1.4
-2025-01-08T11:35:37.411Z - info: html-to-xlsx detected chrome as available html engine
-2025-01-08T11:35:37.412Z - info: Using extension pptx@4.3.2
-2025-01-08T11:35:37.415Z - info: Using extension scheduling@4.0.0
-2025-01-08T11:35:37.483Z - info: Using extension scripts@4.1.0
-2025-01-08T11:35:37.486Z - info: Using extension static-pdf@4.1.0
-2025-01-08T11:35:37.490Z - info: Using extension studio@4.2.0
-2025-01-08T11:35:37.667Z - info: Using extension xlsx@4.3.0
-2025-01-08T11:35:37.672Z - info: Using extension public-templates@4.0.0
-2025-01-08T11:35:37.674Z - info: Using extension sample-template@4.0.0
-2025-01-08T11:35:37.678Z - info: Using extension studio-theme-dark@4.0.0
-2025-01-08T11:35:37.681Z - info: Code sandboxing is disabled, users can potentially penetrate the local system if you allow code from external users to be part of your reports
-2025-01-08T11:35:37.682Z - info: Using general timeout for rendering (reportTimeout: 60000)
-2025-01-08T11:35:37.683Z - info: Using fs provider for template store.
-2025-01-08T11:35:37.693Z - info: fs store is persisting using fs for C:\Users\hp\Desktop\competitoor\Dev\Jsreport template\jsreport\data
-2025-01-08T11:35:37.708Z - info: fs store is loading data
-2025-01-08T11:35:37.759Z - info: fs store is initialized successfully
-2025-01-08T11:35:37.785Z - info: Creating default express app.
-2025-01-08T11:35:37.827Z - info: jsreport server successfully started on http port: 5488
-2025-01-08T11:35:37.829Z - info: Verifying license key free
-2025-01-08T11:35:37.830Z - info: Using free license
-2025-01-08T11:35:37.839Z - info: Initializing worker threads
-2025-01-08T11:35:39.120Z - info: 2 worker threads initialized in 1281ms
-2025-01-08T11:35:39.122Z - info: Starting temp files cleanup with 180000ms threshold
-2025-01-08T11:35:39.124Z - info: reporter initialized
-2025-01-08T11:41:56.747Z - info: Render request 1 queued for execution and waiting for available worker rootId=6fe44xgoci9nuj1, id=6fe44xgoci9nuj1
-2025-01-08T11:41:57.278Z - info: Starting rendering request 1 (user: tigist) rootId=6fe44xgoci9nuj1, id=6fe44xgoci9nuj1
-2025-01-08T11:41:57.281Z - info: Rendering template { name: test, recipe: chrome-pdf, engine: handlebars, preview: true } rootId=6fe44xgoci9nuj1, id=6fe44xgoci9nuj1
-2025-01-08T11:42:03.142Z - info: Rendering request 1 finished in 6444 ms rootId=6fe44xgoci9nuj1, id=6fe44xgoci9nuj1
-2025-01-08T12:05:55.048Z - info: Initializing jsreport (version: 4.7.0, configuration file: jsreport.config.json, nodejs: 20.11.1)
-2025-01-08T12:05:55.058Z - info: Searching for available extensions in C:\Users\hp\Desktop\competitoor\Dev\Jsreport template\jsreport\
-2025-01-08T12:05:55.068Z - info: Extensions location cache C:\Users\hp\AppData\Local\Temp\jsreport\core\locations.json contains older information, crawling
-2025-01-08T12:05:58.655Z - info: Found 36 extension(s)
-2025-01-08T12:05:58.747Z - warn: Filtering out duplicated extension "chrome-pdf" from C:\Users\hp\Desktop\competitoor\Dev\Jsreport template\jsreport\node_modules\jsreport\node_modules\@jsreport\jsreport-chrome-pdf, using C:\Users\hp\Desktop\competitoor\Dev\Jsreport template\jsreport\node_modules\@jsreport\.jsreport-chrome-pdf-DaVlqyvd
-2025-01-08T12:05:58.843Z - info: Using extension authentication@4.2.2
-2025-01-08T12:05:59.605Z - info: Using extension base@4.0.0
-2025-01-08T12:05:59.682Z - info: Using extension child-templates@4.1.0
-2025-01-08T12:05:59.754Z - info: Using extension cli@4.0.5
-2025-01-08T12:05:59.893Z - info: Using extension components@4.0.2
-2025-01-08T12:05:59.938Z - info: Using extension data@4.1.0
-2025-01-08T12:05:59.959Z - info: Using extension express@4.1.3
-2025-01-08T12:06:00.852Z - info: Using extension freeze@4.0.0
-2025-01-08T12:06:00.856Z - info: Using extension fs-store@4.0.5
-2025-01-08T12:06:01.141Z - info: Using extension handlebars@4.0.1
-2025-01-08T12:06:01.145Z - info: Using extension import-export@4.0.5
-2025-01-08T12:06:01.170Z - info: Using extension jsrender@4.0.0
-2025-01-08T12:06:01.174Z - info: Using extension licensing@4.0.3
-2025-01-08T12:06:01.278Z - info: Using extension localization@4.0.1
-2025-01-08T12:06:01.280Z - info: Using extension npm@4.0.0
-2025-01-08T12:06:01.286Z - info: Using extension pdf-utils@4.2.2
-2025-01-08T12:06:01.292Z - info: Using extension reports@4.1.2
-2025-01-08T12:06:01.300Z - info: Using extension tags@4.0.1
-2025-01-08T12:06:01.303Z - info: Using extension text@4.0.2
-2025-01-08T12:06:01.305Z - info: Using extension version-control@4.0.0
-2025-01-08T12:06:01.319Z - info: Using extension chrome-pdf@4.1.0
-2025-01-08T12:06:01.328Z - info: Using extension assets@4.2.0
-2025-01-08T12:06:01.349Z - info: Using extension authorization@4.0.1
-2025-01-08T12:06:01.360Z - info: Using extension browser-client@4.1.0
-2025-01-08T12:06:01.366Z - info: Using extension docx@4.6.0
-2025-01-08T12:06:01.371Z - info: Using extension html-to-xlsx@4.1.4
-2025-01-08T12:06:06.650Z - info: html-to-xlsx detected chrome as available html engine
-2025-01-08T12:06:06.651Z - info: Using extension pptx@4.3.2
-2025-01-08T12:06:06.656Z - info: Using extension scheduling@4.0.0
-2025-01-08T12:06:06.728Z - info: Using extension scripts@4.1.0
-2025-01-08T12:06:06.730Z - info: Using extension static-pdf@4.1.0
-2025-01-08T12:06:06.732Z - info: Using extension studio@4.2.0
-2025-01-08T12:06:06.962Z - info: Using extension xlsx@4.3.0
-2025-01-08T12:06:06.966Z - info: Using extension public-templates@4.0.0
-2025-01-08T12:06:06.970Z - info: Using extension sample-template@4.0.0
-2025-01-08T12:06:06.977Z - info: Using extension studio-theme-dark@4.0.0
-2025-01-08T12:06:06.982Z - info: Code sandboxing is disabled, users can potentially penetrate the local system if you allow code from external users to be part of your reports
-2025-01-08T12:06:06.984Z - info: Using general timeout for rendering (reportTimeout: 60000)
-2025-01-08T12:06:06.985Z - info: Using fs provider for template store.
-2025-01-08T12:06:07.000Z - info: fs store is persisting using fs for C:\Users\hp\Desktop\competitoor\Dev\Jsreport template\jsreport\data
-2025-01-08T12:06:07.029Z - info: fs store is loading data
-2025-01-08T12:06:07.268Z - info: fs store is initialized successfully
-2025-01-08T12:06:07.732Z - info: Creating default express app.
-2025-01-08T12:06:08.237Z - info: jsreport server successfully started on http port: 5488
-2025-01-08T12:06:08.246Z - info: Verifying license key free
-2025-01-08T12:06:08.254Z - info: Using free license
-2025-01-08T12:06:08.313Z - info: Initializing worker threads
-2025-01-08T12:06:08.958Z - info: 2 worker threads initialized in 645ms
-2025-01-08T12:06:08.959Z - info: Starting temp files cleanup with 180000ms threshold
-2025-01-08T12:06:08.961Z - info: reporter initialized
-2025-01-08T12:06:26.694Z - info: Render request 1 queued for execution and waiting for available worker rootId=8ezxpwvorawc66r, id=8ezxpwvorawc66r
-2025-01-08T12:06:26.846Z - info: Starting rendering request 1 (user: tigist) rootId=8ezxpwvorawc66r, id=8ezxpwvorawc66r
-2025-01-08T12:06:26.854Z - info: Rendering template { name: invoice-main, recipe: chrome-pdf, engine: handlebars, preview: true } rootId=8ezxpwvorawc66r, id=8ezxpwvorawc66r
-2025-01-08T12:06:32.180Z - info: Rendering request 1 finished in 5501 ms rootId=8ezxpwvorawc66r, id=8ezxpwvorawc66r
-2025-01-08T12:06:40.220Z - info: Render request 2 queued for execution and waiting for available worker rootId=5m6o46n5qccxd5w, id=5m6o46n5qccxd5w
-2025-01-08T12:06:40.260Z - info: Starting rendering request 2 (user: tigist) rootId=5m6o46n5qccxd5w, id=5m6o46n5qccxd5w
-2025-01-08T12:06:40.262Z - info: Rendering template { name: test, recipe: chrome-pdf, engine: handlebars, preview: true } rootId=5m6o46n5qccxd5w, id=5m6o46n5qccxd5w
-2025-01-08T12:06:46.773Z - info: Rendering request 2 finished in 6556 ms rootId=5m6o46n5qccxd5w, id=5m6o46n5qccxd5w
-2025-01-08T12:39:52.763Z - info: Initializing jsreport (version: 4.7.0, configuration file: jsreport.config.json, nodejs: 20.11.1)
-2025-01-08T12:39:52.770Z - info: Searching for available extensions in C:\Users\hp\Desktop\competitoor\Dev\Jsreport template\jsreport\
-2025-01-08T12:39:52.783Z - info: Extensions location cache contains up to date information, skipping crawling in C:\Users\hp\Desktop\competitoor\Dev\Jsreport template\jsreport\
-2025-01-08T12:39:52.837Z - info: Found 36 extension(s)
-2025-01-08T12:39:52.906Z - warn: Filtering out duplicated extension "chrome-pdf" from C:\Users\hp\Desktop\competitoor\Dev\Jsreport template\jsreport\node_modules\jsreport\node_modules\@jsreport\jsreport-chrome-pdf, using C:\Users\hp\Desktop\competitoor\Dev\Jsreport template\jsreport\node_modules\@jsreport\.jsreport-chrome-pdf-DaVlqyvd
-2025-01-08T12:39:52.986Z - info: Using extension authentication@4.2.2
-2025-01-08T12:39:54.271Z - info: Using extension base@4.0.0
-2025-01-08T12:39:54.279Z - info: Using extension child-templates@4.1.0
-2025-01-08T12:39:54.283Z - info: Using extension cli@4.0.5
-2025-01-08T12:39:54.290Z - info: Using extension components@4.0.2
-2025-01-08T12:39:54.294Z - info: Using extension data@4.1.0
-2025-01-08T12:39:54.297Z - info: Using extension express@4.1.3
-2025-01-08T12:39:55.073Z - info: Using extension freeze@4.0.0
-2025-01-08T12:39:55.076Z - info: Using extension fs-store@4.0.5
-2025-01-08T12:39:55.350Z - info: Using extension handlebars@4.0.1
-2025-01-08T12:39:55.357Z - info: Using extension import-export@4.0.5
-2025-01-08T12:39:55.378Z - info: Using extension jsrender@4.0.0
-2025-01-08T12:39:55.381Z - info: Using extension licensing@4.0.3
-2025-01-08T12:39:55.458Z - info: Using extension localization@4.0.1
-2025-01-08T12:39:55.461Z - info: Using extension npm@4.0.0
-2025-01-08T12:39:55.467Z - info: Using extension pdf-utils@4.2.2
-2025-01-08T12:39:55.473Z - info: Using extension reports@4.1.2
-2025-01-08T12:39:55.480Z - info: Using extension tags@4.0.1
-2025-01-08T12:39:55.483Z - info: Using extension text@4.0.2
-2025-01-08T12:39:55.485Z - info: Using extension version-control@4.0.0
-2025-01-08T12:39:55.502Z - info: Using extension chrome-pdf@4.1.0
-2025-01-08T12:39:55.508Z - info: Using extension assets@4.2.0
-2025-01-08T12:39:55.527Z - info: Using extension authorization@4.0.1
-2025-01-08T12:39:55.534Z - info: Using extension browser-client@4.1.0
-2025-01-08T12:39:55.539Z - info: Using extension docx@4.6.0
-2025-01-08T12:39:55.545Z - info: Using extension html-to-xlsx@4.1.4
-2025-01-08T12:39:56.950Z - info: html-to-xlsx detected chrome as available html engine
-2025-01-08T12:39:56.952Z - info: Using extension pptx@4.3.2
-2025-01-08T12:39:56.958Z - info: Using extension scheduling@4.0.0
-2025-01-08T12:39:57.056Z - info: Using extension scripts@4.1.0
-2025-01-08T12:39:57.059Z - info: Using extension static-pdf@4.1.0
-2025-01-08T12:39:57.061Z - info: Using extension studio@4.2.0
-2025-01-08T12:39:57.250Z - info: Using extension xlsx@4.3.0
-2025-01-08T12:39:57.255Z - info: Using extension public-templates@4.0.0
-2025-01-08T12:39:57.258Z - info: Using extension sample-template@4.0.0
-2025-01-08T12:39:57.262Z - info: Using extension studio-theme-dark@4.0.0
-2025-01-08T12:39:57.265Z - info: Code sandboxing is disabled, users can potentially penetrate the local system if you allow code from external users to be part of your reports
-2025-01-08T12:39:57.266Z - info: Using general timeout for rendering (reportTimeout: 60000)
-2025-01-08T12:39:57.267Z - info: Using fs provider for template store.
-2025-01-08T12:39:57.279Z - info: fs store is persisting using fs for C:\Users\hp\Desktop\competitoor\Dev\Jsreport template\jsreport\data
-2025-01-08T12:39:57.302Z - info: fs store is loading data
-2025-01-08T12:39:57.366Z - info: fs store is initialized successfully
-2025-01-08T12:39:57.396Z - info: Creating default express app.
-2025-01-08T12:39:57.443Z - info: jsreport server successfully started on http port: 5488
-2025-01-08T12:39:57.446Z - info: Verifying license key free
-2025-01-08T12:39:57.448Z - info: Using free license
-2025-01-08T12:39:57.456Z - info: Initializing worker threads
-2025-01-08T12:39:57.937Z - info: 2 worker threads initialized in 481ms
-2025-01-08T12:39:57.939Z - info: Starting temp files cleanup with 180000ms threshold
-2025-01-08T12:39:57.941Z - info: reporter initialized
-2025-01-08T13:54:37.944Z - info: Initializing jsreport (version: 4.7.0, configuration file: jsreport.config.json, nodejs: 20.11.1)
-2025-01-08T13:54:38.065Z - info: Searching for available extensions in C:\Users\hp\Desktop\competitoor\Dev\Jsreport template\jsreport\
-2025-01-08T13:54:38.161Z - info: Extensions location cache C:\Users\hp\AppData\Local\Temp\jsreport\core\locations.json contains older information, crawling
-2025-01-08T13:54:55.638Z - info: Found 36 extension(s)
-2025-01-08T13:55:01.606Z - warn: Filtering out duplicated extension "chrome-pdf" from C:\Users\hp\Desktop\competitoor\Dev\Jsreport template\jsreport\node_modules\jsreport\node_modules\@jsreport\jsreport-chrome-pdf, using C:\Users\hp\Desktop\competitoor\Dev\Jsreport template\jsreport\node_modules\@jsreport\.jsreport-chrome-pdf-DaVlqyvd
-2025-01-08T13:55:01.833Z - info: Using extension authentication@4.2.2
-2025-01-08T13:56:24.189Z - info: Initializing jsreport (version: 4.7.0, configuration file: jsreport.config.json, nodejs: 20.11.1)
-2025-01-08T13:56:24.202Z - info: Searching for available extensions in C:\Users\hp\Desktop\competitoor\Dev\Jsreport template\jsreport\
-2025-01-08T13:56:24.218Z - info: Extensions location cache contains up to date information, skipping crawling in C:\Users\hp\Desktop\competitoor\Dev\Jsreport template\jsreport\
-2025-01-08T13:56:24.324Z - info: Found 36 extension(s)
-2025-01-08T13:56:25.461Z - warn: Filtering out duplicated extension "chrome-pdf" from C:\Users\hp\Desktop\competitoor\Dev\Jsreport template\jsreport\node_modules\jsreport\node_modules\@jsreport\jsreport-chrome-pdf, using C:\Users\hp\Desktop\competitoor\Dev\Jsreport template\jsreport\node_modules\@jsreport\.jsreport-chrome-pdf-DaVlqyvd
-2025-01-08T13:56:25.809Z - info: Using extension authentication@4.2.2
-2025-01-08T13:56:26.836Z - info: Using extension base@4.0.0
-2025-01-08T13:56:26.921Z - info: Using extension child-templates@4.1.0
-2025-01-08T13:56:27.030Z - info: Using extension cli@4.0.5
-2025-01-08T13:56:27.155Z - info: Using extension components@4.0.2
-2025-01-08T13:56:27.290Z - info: Using extension data@4.1.0
-2025-01-08T13:56:27.350Z - info: Using extension express@4.1.3
-2025-01-08T13:57:00.414Z - info: Using extension freeze@4.0.0
-2025-01-08T13:57:00.515Z - info: Using extension fs-store@4.0.5
-2025-01-08T13:57:19.182Z - info: Using extension handlebars@4.0.1
-2025-01-08T13:57:19.281Z - info: Using extension import-export@4.0.5
-2025-01-08T13:57:20.950Z - info: Using extension jsrender@4.0.0
-2025-01-08T13:57:20.997Z - info: Using extension licensing@4.0.3
-2025-01-08T13:57:23.759Z - info: Using extension localization@4.0.1
-2025-01-08T13:57:23.790Z - info: Using extension npm@4.0.0
-2025-01-08T13:57:23.888Z - info: Using extension pdf-utils@4.2.2
-2025-01-08T13:57:24.000Z - info: Using extension reports@4.1.2
-2025-01-08T13:57:24.153Z - info: Using extension tags@4.0.1
-2025-01-08T13:57:24.309Z - info: Using extension text@4.0.2
-2025-01-08T13:57:24.427Z - info: Using extension version-control@4.0.0
-2025-01-08T13:57:24.906Z - info: Using extension chrome-pdf@4.1.0
-2025-01-08T13:57:25.067Z - info: Using extension assets@4.2.0
-2025-01-08T13:57:27.113Z - info: Using extension authorization@4.0.1
-2025-01-08T13:57:27.560Z - info: Using extension browser-client@4.1.0
-2025-01-08T13:57:28.070Z - info: Using extension docx@4.6.0
-2025-01-08T13:57:28.280Z - info: Using extension html-to-xlsx@4.1.4
-2025-01-08T13:57:58.360Z - info: html-to-xlsx detected chrome as available html engine
-2025-01-08T13:57:58.376Z - info: Using extension pptx@4.3.2
-2025-01-08T13:57:58.472Z - info: Using extension scheduling@4.0.0
-2025-01-08T13:58:07.504Z - info: Using extension scripts@4.1.0
-2025-01-08T13:58:07.535Z - info: Using extension static-pdf@4.1.0
-2025-01-08T13:58:07.999Z - info: Using extension studio@4.2.0
-2025-01-08T13:58:15.094Z - info: Using extension xlsx@4.3.0
-2025-01-08T13:58:15.120Z - info: Using extension public-templates@4.0.0
-2025-01-08T13:58:15.150Z - info: Using extension sample-template@4.0.0
-2025-01-08T13:58:15.184Z - info: Using extension studio-theme-dark@4.0.0
-2025-01-08T13:58:15.218Z - info: Code sandboxing is disabled, users can potentially penetrate the local system if you allow code from external users to be part of your reports
-2025-01-08T13:58:15.219Z - info: Using general timeout for rendering (reportTimeout: 60000)
-2025-01-08T13:58:15.219Z - info: Using fs provider for template store.
-2025-01-08T13:58:15.232Z - info: fs store is persisting using fs for C:\Users\hp\Desktop\competitoor\Dev\Jsreport template\jsreport\data
-2025-01-08T13:58:15.247Z - info: fs store is loading data
-2025-01-08T13:58:15.493Z - info: fs store is initialized successfully
-2025-01-08T13:58:15.518Z - info: Creating default express app.
-2025-01-08T13:58:18.152Z - info: jsreport server successfully started on http port: 5488
-2025-01-08T13:58:18.157Z - info: Verifying license key free
-2025-01-08T13:58:18.160Z - info: Using free license
-2025-01-08T13:58:18.173Z - info: Initializing worker threads
-2025-01-08T13:58:25.670Z - info: 2 worker threads initialized in 7497ms
-2025-01-08T13:58:25.671Z - info: Starting temp files cleanup with 180000ms threshold
-2025-01-08T13:58:25.673Z - info: reporter initialized
+2025-01-08T16:47:30.412Z - info: Initializing jsreport (version: 4.7.0, configuration file: jsreport.config.json, nodejs: 20.11.1)
+2025-01-08T16:47:30.421Z - info: Searching for available extensions in C:\Users\hp\Desktop\competitoor\Dev\Jsreport template\jsreport\
+2025-01-08T16:47:30.448Z - info: Extensions location cache C:\Users\hp\AppData\Local\Temp\jsreport\core\locations.json contains older information, crawling
+2025-01-08T16:47:34.870Z - info: Found 36 extension(s)
+2025-01-08T16:47:36.791Z - warn: Filtering out duplicated extension "chrome-pdf" from C:\Users\hp\Desktop\competitoor\Dev\Jsreport template\jsreport\node_modules\jsreport\node_modules\@jsreport\jsreport-chrome-pdf, using C:\Users\hp\Desktop\competitoor\Dev\Jsreport template\jsreport\node_modules\@jsreport\.jsreport-chrome-pdf-DaVlqyvd
+2025-01-08T16:47:36.906Z - info: Using extension authentication@4.2.2
+2025-01-08T16:47:44.513Z - info: Using extension base@4.0.0
+2025-01-08T16:47:44.539Z - info: Using extension child-templates@4.1.0
+2025-01-08T16:47:44.564Z - info: Using extension cli@4.0.5
+2025-01-08T16:47:44.683Z - info: Using extension components@4.0.2
+2025-01-08T16:47:44.725Z - info: Using extension data@4.1.0
+2025-01-08T16:47:44.760Z - info: Using extension express@4.1.3
+2025-01-08T16:48:03.331Z - info: Using extension freeze@4.0.0
+2025-01-08T16:48:03.370Z - info: Using extension fs-store@4.0.5
+2025-01-08T16:48:09.204Z - info: Using extension handlebars@4.0.1
+2025-01-08T16:48:09.235Z - info: Using extension import-export@4.0.5
+2025-01-08T16:48:09.577Z - info: Using extension jsrender@4.0.0
+2025-01-08T16:48:09.601Z - info: Using extension licensing@4.0.3
+2025-01-08T16:48:10.495Z - info: Using extension localization@4.0.1
+2025-01-08T16:48:10.524Z - info: Using extension npm@4.0.0
+2025-01-08T16:48:10.561Z - info: Using extension pdf-utils@4.2.2
+2025-01-08T16:48:10.622Z - info: Using extension reports@4.1.2
+2025-01-08T16:48:10.681Z - info: Using extension tags@4.0.1
+2025-01-08T16:48:10.745Z - info: Using extension text@4.0.2
+2025-01-08T16:48:10.773Z - info: Using extension version-control@4.0.0
+2025-01-08T16:48:11.041Z - info: Using extension chrome-pdf@4.1.0
+2025-01-08T16:48:11.087Z - info: Using extension assets@4.2.0
+2025-01-08T16:48:11.430Z - info: Using extension authorization@4.0.1
+2025-01-08T16:48:11.601Z - info: Using extension browser-client@4.1.0
+2025-01-08T16:48:11.819Z - info: Using extension docx@4.6.0
+2025-01-08T16:48:11.850Z - info: Using extension html-to-xlsx@4.1.4
+2025-01-08T16:48:16.786Z - info: html-to-xlsx detected chrome as available html engine
+2025-01-08T16:48:16.788Z - info: Using extension pptx@4.3.2
+2025-01-08T16:48:16.817Z - info: Using extension scheduling@4.0.0
+2025-01-08T16:48:18.254Z - info: Using extension scripts@4.1.0
+2025-01-08T16:48:18.278Z - info: Using extension static-pdf@4.1.0
+2025-01-08T16:48:18.305Z - info: Using extension studio@4.2.0
+2025-01-08T16:48:21.953Z - info: Using extension xlsx@4.3.0
+2025-01-08T16:48:21.992Z - info: Using extension public-templates@4.0.0
+2025-01-08T16:48:22.036Z - info: Using extension sample-template@4.0.0
+2025-01-08T16:48:22.079Z - info: Using extension studio-theme-dark@4.0.0
+2025-01-08T16:48:22.135Z - info: Code sandboxing is disabled, users can potentially penetrate the local system if you allow code from external users to be part of your reports
+2025-01-08T16:48:22.137Z - info: Using general timeout for rendering (reportTimeout: 60000)
+2025-01-08T16:48:22.138Z - info: Using fs provider for template store.
+2025-01-08T16:48:22.151Z - info: fs store is persisting using fs for C:\Users\hp\Desktop\competitoor\Dev\Jsreport template\jsreport\data
+2025-01-08T16:48:22.170Z - info: fs store is loading data
+2025-01-08T16:48:22.208Z - info: fs store is initialized successfully
+2025-01-08T16:48:22.243Z - info: Creating default express app.
+2025-01-08T16:48:23.944Z - info: jsreport server successfully started on http port: 5488
+2025-01-08T16:48:23.947Z - info: Verifying license key free
+2025-01-08T16:48:23.949Z - info: Using free license
+2025-01-08T16:48:24.015Z - info: Migrating templates chrome settings (waitForNetworkIddle -> waitForNetworkIdle)
+2025-01-08T16:48:24.031Z - info: Migration successful
+2025-01-08T16:48:24.599Z - info: Initializing worker threads
+2025-01-08T16:48:28.921Z - info: 2 worker threads initialized in 4323ms
+2025-01-08T16:48:28.922Z - info: Starting temp files cleanup with 180000ms threshold
+2025-01-08T16:48:28.924Z - info: reporter initialized
+2025-01-08T16:51:21.259Z - info: Render request 1 queued for execution and waiting for available worker rootId=2gvlqp3em18ed7w, id=2gvlqp3em18ed7w
+2025-01-08T16:51:21.311Z - info: Starting rendering request 1 (user: tigist) rootId=2gvlqp3em18ed7w, id=2gvlqp3em18ed7w
+2025-01-08T16:51:21.313Z - info: Rendering template { name: invoice-main, recipe: chrome-pdf, engine: handlebars, preview: true } rootId=2gvlqp3em18ed7w, id=2gvlqp3em18ed7w
+2025-01-08T16:51:36.108Z - info: Rendering request 1 finished in 14854 ms rootId=2gvlqp3em18ed7w, id=2gvlqp3em18ed7w

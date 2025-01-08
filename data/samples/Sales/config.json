@@ -2,13 +2,13 @@
     "name": "Sales",
     "shortid": "FnHe~Wz",
     "creationDate": {
-        "$$date": 1736335837530
+        "$$date": 1736354904220
     },
     "modificationDate": {
-        "$$date": 1736335837530
+        "$$date": 1736354904220
     },
     "inheritedReadPermissions": [],
     "inheritedEditPermissions": [],
-    "_id": "n8zZQgARbJs27Gat",
+    "_id": "OzZ6asY3WeL2s7ft",
     "$entitySet": "folders"
 }

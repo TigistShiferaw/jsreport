@@ -2,13 +2,13 @@
     "shortid": "G3i2B3",
     "name": "Invoice",
     "creationDate": {
-        "$$date": 1736335837469
+        "$$date": 1736354904116
     },
     "modificationDate": {
-        "$$date": 1736335837469
+        "$$date": 1736354904116
     },
     "inheritedReadPermissions": [],
     "inheritedEditPermissions": [],
-    "_id": "S8af3uLOKHi6U8wt",
+    "_id": "OJevqqWHFSGOPA5M",
     "$entitySet": "folders"
 }
