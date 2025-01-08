@@ -29,7 +29,7 @@ RUN npm install puppeteer@latest
 # Ensure Puppeteer cache directory exists and is writable
 RUN mkdir -p /home/appuser/.cache/puppeteer && chown -R appuser:appuser /home/appuser/.cache
 
-# Copy remaining project files
+# Copy only necessary files for production (ignores non-essential files)
 COPY . .
 
 # Expose port for JSReport
