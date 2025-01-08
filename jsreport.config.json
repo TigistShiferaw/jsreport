@@ -40,7 +40,9 @@
     },
     "sample-template": {
       "createSamples": true
+    },
+    "api": {
+      "enabled": true
     }
   }
-  
 }
