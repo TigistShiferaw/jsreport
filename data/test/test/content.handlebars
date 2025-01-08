@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report</title>
+    <style>
+        {{ asset "./assets/style.css" }}
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+</head>
+<body>
+
+    <!-- Page 3: Executive Summary -->
+    <section class="executive-summary container">
+        <h1>Executive Summary</h1>
+        <div class="summary-content">
+            <div class="summary-item">
+                <img src="{#asset ./assets/sku-icon.png @encoding=dataURI}" alt="SKUs Icon" class="icon">
+                <p><strong>Total SKUs Analyzed:</strong> {{countersData.products}}</p>
+            </div>
+            <div class="summary-item">
+                <img src="{#asset ./assets/shop-icon.png @encoding=dataURI}" alt="Shops Icon" class="icon">
+                <p><strong>Number of Shops:</strong> {{countersData.shops}}</p>
+            </div>
+            <div class="summary-item">
+                <img src="{#asset ./assets/category-icon.jpeg @encoding=dataURI}" alt="Categories Icon" class="icon">
+                <p><strong>Number of Categories Covered:</strong> {{countersData.categories}}</p>
+            </div>
+            <div class="summary-item">
+                <img src="{#asset ./assets/country-icon.png @encoding=dataURI}" alt="Countries Icon" class="icon">
+                <p><strong>Number of Countries Covered:</strong> {{countersData.countries}}</p>
+            </div>
+        </div>
+        <div class="legal-note">
+            <p><strong>Legal Note:</strong> This report has been generated using publicly available data collected through lawful and ethical methodologies...</p>
+            <p>For further details regarding our data collection policies, please refer to our <a href="#">Compliance Statement/Terms of Service</a> or contact our legal department at <a href="mailto:legal@competitoor.com">legal@competitoor.com</a>.</p>
+        </div>
+ 
+ </section>
+
+
+</body>
+</html>
