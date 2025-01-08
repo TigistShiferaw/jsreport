@@ -1,19 +1,33 @@
-const puppeteer = require('puppeteer-core');
-const chromiumExecutablePath = '/usr/bin/chromium';  // Path to Chromium installed in your Docker container
+const jsreport = require('jsreport')()
+const puppeteer = require('puppeteer-core')
 
-async function launchBrowser() {
-    const browser = await puppeteer.launch({
+// Path to Chromium installed in the Docker container
+const chromiumExecutablePath = '/usr/bin/chromium'
+
+if (process.env.JSREPORT_CLI) {
+  // Export jsreport instance to make it possible to use jsreport-cli
+  module.exports = jsreport
+} else {
+  jsreport.init()
+    .then(() => {
+      // Initialize Puppeteer with no-sandbox flag
+      puppeteer.launch({
         executablePath: chromiumExecutablePath,
-        args: ['--no-sandbox', '--disable-setuid-sandbox'] // Pass the flags here
-    });
-    return browser;
-}
+        args: ['--no-sandbox', '--disable-setuid-sandbox']
+      })
+        .then(browser => {
+          console.log('Browser launched');
+          // You can add additional logic here for handling jsReport rendering if needed
+        })
+        .catch(err => {
+          console.error('Error launching browser:', err);
+        });
 
-launchBrowser()
-  .then((browser) => {
-    console.log('Browser launched');
-    // Your code to generate the report...
-  })
-  .catch((err) => {
-    console.error('Error launching browser:', err);
-  });
+      console.log('Jsreport is up and running...');
+    })
+    .catch((e) => {
+      // Error during startup
+      console.error(e.stack)
+      process.exit(1)
+    })
+}
