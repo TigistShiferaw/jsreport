@@ -1,25 +1,17 @@
-# Use Node.js 18 as the base image
-FROM node:20 AS build-stage
-
+# Use Node.js 18 as the base image (ensure compatibility with JSReport)
+FROM node:18
 
 # Set working directory
 WORKDIR /app
 
-# Copy project files
-COPY . .
+# Copy package.json and package-lock.json
+COPY package*.json ./
+
+USER root
+
 
 # Install dependencies
 RUN npm install
-
-# Install Puppeteer dependencies
-RUN apt-get update && apt-get install -y \
-    libnss3 \
-    libxss1 \
-    libasound2 \
-    fonts-liberation \
-    libappindicator3-1 \
-    libgbm1 && \
-    rm -rf /var/lib/apt/lists/*
 
 # Expose port for JSReport
 EXPOSE 5488
