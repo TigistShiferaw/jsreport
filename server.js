@@ -2,7 +2,7 @@ const jsreport = require('jsreport')()
 const puppeteer = require('puppeteer-core')
 
 // Path to Chromium installed in the Docker container
-const chromiumExecutablePath = '/usr/bin/chromium'
+const chromiumExecutablePath = process.env.PUPPETEER_EXECUTABLE_PATH || '/usr/bin/chromium'
 
 if (process.env.JSREPORT_CLI) {
   // Export jsreport instance to make it possible to use jsreport-cli
@@ -16,7 +16,7 @@ if (process.env.JSREPORT_CLI) {
         args: ['--no-sandbox', '--disable-setuid-sandbox']
       })
         .then(browser => {
-          console.log('Browser launched');
+          console.log('Browser launched successfully');
           // You can add additional logic here for handling jsReport rendering if needed
         })
         .catch(err => {
