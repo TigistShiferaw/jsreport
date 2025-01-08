@@ -1,43 +1,21 @@
-# Use Node.js 20 as the base image
+# Use official Node.js image
 FROM node:20
 
-# Set working directory
+# Set the working directory
 WORKDIR /app
 
-# Copy package.json and package-lock.json for dependency installation
+# Install required dependencies
+RUN npm install -g jsreport
+
+# Install jsReport with templates
 COPY package*.json ./
+RUN npm install
 
-# Install the latest npm version (compatible with Node.js 20)
-RUN npm install -g npm@latest
+# Copy your custom templates and assets (if you have any)
+COPY ./templates /app/templates
 
-# Install project dependencies with legacy peer dependencies flag to avoid issues
-RUN npm install --legacy-peer-deps
-
-# Install Puppeteer dependencies (required for PDF generation)
-RUN apt-get update && apt-get install -y \
-    libnss3 \
-    libxss1 \
-    libasound2 \
-    fonts-liberation \
-    libappindicator3-1 \
-    libgbm1 && \
-    rm -rf /var/lib/apt/lists/*
-
-# Install Puppeteer (update to a more recent version if possible)
-RUN npm install puppeteer@latest
-
-# Ensure Puppeteer cache directory exists and is writable
-RUN mkdir -p /home/appuser/.cache/puppeteer && chown -R appuser:appuser /home/appuser/.cache
-
-# Copy only necessary files for production (ignores non-essential files)
-COPY . .
-
-# Expose port for JSReport
+# Expose jsReport port
 EXPOSE 5488
 
-# Create and switch to a non-root user
-RUN useradd -m appuser
-USER appuser
-
-# Run the JSReport app
-CMD ["npm", "start"]
+# Start jsReport
+CMD ["jsreport", "start"]
