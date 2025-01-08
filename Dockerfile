@@ -31,6 +31,10 @@ EXPOSE 5488
 
 # Create and switch to a non-root user
 RUN useradd -m appuser
+
+# Ensure the appuser has permissions to the /app directory
+RUN chown -R appuser:appuser /app
+
 USER appuser
 
 # Run the JSReport app
