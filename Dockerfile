@@ -17,8 +17,6 @@ RUN apt-get update && apt-get install -y \
   ca-certificates \
   fonts-liberation \
   libgtk-3-0 \
-  libasound2 \
-  libasound2-dev \
   --no-install-recommends
 
 # Set the working directory
@@ -29,8 +27,13 @@ COPY package.json ./
 RUN npm install
 
 # Copy the rest of your application
-COPY . ./ 
+COPY . ./
 
 # Expose the port and run the application
 EXPOSE 3000
+
+# Set the environment variable to use --no-sandbox flag in Puppeteer
+ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
+
+# Run the application
 CMD ["node", "server.js"]
