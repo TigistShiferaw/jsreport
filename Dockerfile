@@ -1,5 +1,5 @@
 # Use official Node.js image as a base image
-FROM node:16
+FROM node:20
 
 # Install additional libraries (if needed for Puppeteer or jsreport-pdf)
 RUN apt-get update && apt-get install -y \
