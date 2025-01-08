@@ -1,5 +1,5 @@
-# Use Node.js 18 as the base image
-FROM node:18
+# Use Node.js 20 as the base image
+FROM node:20
 
 # Set working directory
 WORKDIR /app
@@ -7,7 +7,7 @@ WORKDIR /app
 # Copy package.json and package-lock.json for dependency installation
 COPY package*.json ./
 
-# Update npm to avoid issues
+# Install the latest npm version (compatible with Node.js 20)
 RUN npm install -g npm@latest
 
 # Install project dependencies
