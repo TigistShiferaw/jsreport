@@ -17,6 +17,7 @@ RUN apt-get update && apt-get install -y \
   ca-certificates \
   fonts-liberation \
   libgtk-3-0 \
+  chromium \
   --no-install-recommends
 
 # Set the working directory
@@ -32,8 +33,8 @@ COPY . ./
 # Expose the port and run the application
 EXPOSE 3000
 
-# Set the environment variable to use --no-sandbox flag in Puppeteer
-ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
+# Set the environment variable to use the installed Chromium executable
+ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
 
 # Run the application
 CMD ["node", "server.js"]
