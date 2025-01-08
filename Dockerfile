@@ -2,6 +2,7 @@
 FROM node:20
 
 # Set the working directory
+WORKDIR /app
 
 # Install required dependencies
 RUN npm install -g jsreport
@@ -9,11 +10,12 @@ RUN npm install -g jsreport
 # Install Puppeteer explicitly
 RUN npm install puppeteer --save
 
-# Install jsReport with templates
+# Copy package.json and install dependencies
 COPY package*.json ./
 RUN npm install
 
-# Copy your custom templates and assets (if you have any)
+# Copy custom templates and assets (if you have any)
+COPY ./templates /app/templates
 
 # Expose jsReport port
 EXPOSE 5488
