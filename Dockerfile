@@ -7,7 +7,10 @@ WORKDIR /app
 # Copy package.json and package-lock.json for dependency installation
 COPY package*.json ./
 
-# Install dependencies
+# Update npm to avoid issues
+RUN npm install -g npm@latest
+
+# Install project dependencies
 RUN npm install
 
 # Install Puppeteer dependencies (required for PDF generation)
@@ -20,8 +23,9 @@ RUN apt-get update && apt-get install -y \
     libgbm1 && \
     rm -rf /var/lib/apt/lists/*
 
-# Install Puppeteer Chrome binaries
-RUN npx puppeteer@20.7.0 browsers install chrome
+# Install Puppeteer
+RUN npm install puppeteer@20.7.0
+RUN node node_modules/puppeteer/install.js
 
 # Ensure Puppeteer cache directory exists and is writable
 RUN mkdir -p /home/appuser/.cache/puppeteer && chown -R appuser:appuser /home/appuser/.cache
