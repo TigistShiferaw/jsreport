@@ -1,4 +1,4 @@
-# Use Node.js 18 as the base image (ensure compatibility with JSReport)
+# Use Node.js 18 as the base image
 FROM node:18
 
 # Set working directory
@@ -20,21 +20,20 @@ RUN apt-get update && apt-get install -y \
     libgbm1 && \
     rm -rf /var/lib/apt/lists/*
 
+# Install Puppeteer Chrome binaries
+RUN npx puppeteer@20.7.0 browsers install chrome
+
+# Ensure Puppeteer cache directory exists and is writable
+RUN mkdir -p /home/appuser/.cache/puppeteer && chown -R appuser:appuser /home/appuser/.cache
+
 # Copy remaining project files
 COPY . .
-
-# Pre-install Puppeteer binaries
-RUN npx puppeteer install
 
 # Expose port for JSReport
 EXPOSE 5488
 
 # Create and switch to a non-root user
 RUN useradd -m appuser
-
-# Ensure the appuser has permissions to the /app directory
-RUN chown -R appuser:appuser /app
-
 USER appuser
 
 # Run the JSReport app
