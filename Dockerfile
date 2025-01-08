@@ -31,7 +31,7 @@ RUN npm install
 COPY . ./
 
 # Expose the port and run the application
-EXPOSE 3000
+EXPOSE 5488
 
 # Set the environment variable to use the installed Chromium executable
 ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
