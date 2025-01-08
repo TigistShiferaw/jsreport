@@ -6,6 +6,7 @@ RUN apt-get update && apt-get install -y \
   libxss1 \
   libappindicator3-1 \
   libdrm2 \
+  libgbm1 \  # Add this line to install libgbm1
   libx11-xcb1 \
   libnss3 \
   libgdk-pixbuf2.0-0 \
