@@ -2,7 +2,6 @@
 FROM node:20
 
 # Set the working directory
-WORKDIR /app
 
 # Install required dependencies
 RUN npm install -g jsreport
