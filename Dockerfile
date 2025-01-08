@@ -36,5 +36,9 @@ EXPOSE 3000
 # Set the environment variable to use the installed Chromium executable
 ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
 
+# Set environment variable to disable sandboxing (for running as root)
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+ENV CHROMIUM_FLAGS="--no-sandbox --disable-setuid-sandbox"
+
 # Run the application
 CMD ["node", "server.js"]
