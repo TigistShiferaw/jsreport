@@ -2,7 +2,6 @@
 FROM node:20
 
 # Install additional libraries (including those needed by Puppeteer and jsreport-pdf)
-# Install dependencies required by Puppeteer and jsreport-pdf
 RUN apt-get update && apt-get install -y \
   libxss1 \
   libappindicator3-1 \
@@ -18,8 +17,9 @@ RUN apt-get update && apt-get install -y \
   ca-certificates \
   fonts-liberation \
   libgtk-3-0 \
+  libasound2 \
+  libasound2-dev \
   --no-install-recommends
-
 
 # Set the working directory
 WORKDIR /app
@@ -29,7 +29,7 @@ COPY package.json ./
 RUN npm install
 
 # Copy the rest of your application
-COPY . ./
+COPY . ./ 
 
 # Expose the port and run the application
 EXPOSE 3000
