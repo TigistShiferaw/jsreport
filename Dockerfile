@@ -8,7 +8,8 @@ WORKDIR /app
 COPY . .
 
 # Install dependencies
-RUN npm install
+RUN npm RUN npm ci
+
 
 # Install Puppeteer dependencies
 RUN apt-get update && apt-get install -y \

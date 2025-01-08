@@ -19,11 +19,9 @@
   },
   "homepage": "https://github.com/TigistShiferaw/jsreport#readme",
   "dependencies": {
-    "jsreport": "^4.7.0",
-    "puppeteer": "^20.9.0"
+    "jsreport": "^4.7.0"
   },
   "engines": {
-  "node": ">=18.15.0"
-}
-
+    "node": ">=18.15.0"
+  }
 }
