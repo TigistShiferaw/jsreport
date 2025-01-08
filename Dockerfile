@@ -7,6 +7,9 @@ WORKDIR /app
 # Install required dependencies
 RUN npm install -g jsreport
 
+# Install Puppeteer explicitly
+RUN npm install puppeteer --save
+
 # Install jsReport with templates
 COPY package*.json ./
 RUN npm install
