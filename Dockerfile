@@ -15,7 +15,7 @@ COPY package*.json ./
 RUN npm install
 
 # Copy custom templates and assets (if you have any)
-COPY ./templates /app/templates
+# COPY ./templates /app/templates
 
 # Expose jsReport port
 EXPOSE 5488
