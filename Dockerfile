@@ -5,7 +5,6 @@ FROM node:20
 RUN apt-get update && apt-get install -y \
   libxss1 \
   libappindicator3-1 \
-  libindicator3-7 \
   fonts-liberation \
   libgtk-3-0 \
   libx11-xcb1 \
@@ -22,7 +21,7 @@ RUN apt-get update && apt-get install -y \
 WORKDIR /app
 
 # Copy package.json and install dependencies
-COPY package.json ./
+COPY package.json ./ 
 RUN npm install
 
 # Copy the rest of your application
