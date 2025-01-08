@@ -10,24 +10,28 @@ if (process.env.JSREPORT_CLI) {
 } else {
   jsreport.init()
     .then(() => {
+      console.log('Jsreport initialized successfully.');
+
       // Initialize Puppeteer with no-sandbox flag
       puppeteer.launch({
         executablePath: chromiumExecutablePath,
         args: ['--no-sandbox', '--disable-setuid-sandbox']
       })
         .then(browser => {
-          console.log('Browser launched');
+          console.log('Browser launched successfully.');
           // You can add additional logic here for handling jsReport rendering if needed
         })
         .catch(err => {
           console.error('Error launching browser:', err);
+          process.exit(1);
         });
 
+      // Confirm that jsreport is up and running
       console.log('Jsreport is up and running...');
     })
     .catch((e) => {
-      // Error during startup
-      console.error(e.stack)
+      // Error during jsreport initialization
+      console.error('Error initializing jsreport:', e.stack)
       process.exit(1)
     })
 }
