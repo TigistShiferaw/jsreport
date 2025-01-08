@@ -20,6 +20,9 @@ RUN apt-get update && apt-get install -y \
   chromium \
   --no-install-recommends
 
+# Add a non-root user
+RUN useradd -m nodeuser
+
 # Set the working directory
 WORKDIR /app
 
@@ -29,6 +32,12 @@ RUN npm install
 
 # Copy the rest of your application
 COPY . ./
+
+# Change ownership of the working directory to the non-root user
+RUN chown -R nodeuser:nodeuser /app
+
+# Switch to the non-root user
+USER nodeuser
 
 # Expose the port and run the application
 EXPOSE 5488

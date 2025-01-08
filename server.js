@@ -17,7 +17,6 @@ if (process.env.JSREPORT_CLI) {
       })
         .then(browser => {
           console.log('Browser launched successfully');
-          // You can add additional logic here for handling jsReport rendering if needed
         })
         .catch(err => {
           console.error('Error launching browser:', err);
