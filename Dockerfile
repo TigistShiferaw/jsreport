@@ -1,12 +1,11 @@
 # Use official Node.js image as a base image
 FROM node:20
 
-# Install additional libraries (if needed for Puppeteer or jsreport-pdf)
+# Install additional libraries (including those needed by Puppeteer and jsreport-pdf)
 RUN apt-get update && apt-get install -y \
   libxss1 \
   libappindicator3-1 \
-  fonts-liberation \
-  libgtk-3-0 \
+  libdrm2 \
   libx11-xcb1 \
   libnss3 \
   libgdk-pixbuf2.0-0 \
@@ -15,6 +14,8 @@ RUN apt-get update && apt-get install -y \
   xdg-utils \
   wget \
   ca-certificates \
+  fonts-liberation \
+  libgtk-3-0 \
   --no-install-recommends
 
 # Set the working directory
