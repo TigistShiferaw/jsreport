@@ -10,10 +10,17 @@ if (process.env.JSREPORT_CLI) {
 } else {
   jsreport.init()
     .then(() => {
-      // Initialize Puppeteer with no-sandbox flag
+      // Initialize Puppeteer with no-sandbox flag and additional arguments
       puppeteer.launch({
         executablePath: chromiumExecutablePath,
-        args: ['--no-sandbox', '--disable-setuid-sandbox']
+        args: [
+          '--no-sandbox', 
+          '--disable-setuid-sandbox', 
+          '--headless', 
+          '--disable-gpu', 
+          '--disable-software-rasterizer', 
+          '--no-zygote'
+        ]
       })
         .then(browser => {
           console.log('Browser launched successfully');
