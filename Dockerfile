@@ -1,10 +1,10 @@
-# Base image with Node.js
+# Use Node.js as base image
 FROM node:14
 
 # Set working directory
 WORKDIR /app
 
-# Copy app files
+# Copy project files
 COPY . .
 
 # Install dependencies
@@ -20,8 +20,8 @@ RUN apt-get update && apt-get install -y \
     libgbm1 && \
     rm -rf /var/lib/apt/lists/*
 
-# Expose JSReport port
+# Expose port for JSReport
 EXPOSE 5488
 
-# Start JSReport
+# Run the JSReport app
 CMD ["npm", "start"]
