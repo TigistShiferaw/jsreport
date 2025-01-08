@@ -20,4 +20,4 @@ RUN npm install
 EXPOSE 5488
 
 # Start jsReport
-CMD ["jsreport", "start"]
+CMD ["npm", "start"]
