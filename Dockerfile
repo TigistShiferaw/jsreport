@@ -11,7 +11,7 @@ COPY package*.json ./
 RUN npm install -g npm@latest
 
 # Install project dependencies
-RUN npm install
+RUN npm install --legacy-peer-deps
 
 # Install Puppeteer dependencies (required for PDF generation)
 RUN apt-get update && apt-get install -y \
