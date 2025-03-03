@@ -1,0 +1,18 @@
+{
+    "_id": "678e53900e46f951f9c21916",
+    "modificationDate": {
+        "$$date": 1741002549015
+    },
+    "name": "report-data",
+    "shortid": "B1Ns-r1M",
+    "workspaceShortid": "l1DbOPsN5",
+    "workspaceVersion": 1,
+    "worskpaceVersion": 1,
+    "workspaceId": "678e53900e46f951f9c21913",
+    "creationDate": {
+        "$$date": 1737380752662
+    },
+    "inheritedReadPermissions": [],
+    "inheritedEditPermissions": [],
+    "$entitySet": "data"
+}

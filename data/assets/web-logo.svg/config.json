@@ -1,0 +1,15 @@
+{
+    "_id": "67a455b954110bdb664bf623",
+    "name": "web-logo.svg",
+    "creationDate": {
+        "$$date": 1738823097017
+    },
+    "modificationDate": {
+        "$$date": 1740657412062
+    },
+    "shortid": "dLsVG5f",
+    "workspaceId": "678e53900e46f951f9c21913",
+    "inheritedReadPermissions": [],
+    "inheritedEditPermissions": [],
+    "$entitySet": "assets"
+}

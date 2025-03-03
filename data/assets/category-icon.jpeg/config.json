@@ -1,0 +1,15 @@
+{
+    "_id": "678f8e720e46f951f9c21b31",
+    "name": "category-icon.jpeg",
+    "creationDate": {
+        "$$date": 1737461362711
+    },
+    "modificationDate": {
+        "$$date": 1740657412058
+    },
+    "shortid": "RTArLEU",
+    "workspaceId": "678e53900e46f951f9c21913",
+    "inheritedReadPermissions": [],
+    "inheritedEditPermissions": [],
+    "$entitySet": "assets"
+}

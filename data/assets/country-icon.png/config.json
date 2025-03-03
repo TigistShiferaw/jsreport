@@ -1,0 +1,15 @@
+{
+    "_id": "678f8e820e46f951f9c21b32",
+    "name": "country-icon.png",
+    "creationDate": {
+        "$$date": 1737461378326
+    },
+    "modificationDate": {
+        "$$date": 1740657412060
+    },
+    "shortid": "A5R6zY0",
+    "workspaceId": "678e53900e46f951f9c21913",
+    "inheritedReadPermissions": [],
+    "inheritedEditPermissions": [],
+    "$entitySet": "assets"
+}

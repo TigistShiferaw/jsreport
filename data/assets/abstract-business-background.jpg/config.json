@@ -1,0 +1,16 @@
+{
+    "_id": "67b31c4254110bdb664c17d6",
+    "name": "abstract-business-background.jpg",
+    "creationDate": {
+        "$$date": 1739791426554
+    },
+    "modificationDate": {
+        "$$date": 1740657412068
+    },
+    "shortid": "kqFSuVQ",
+    "workspaceId": "678e53900e46f951f9c21913",
+    "inheritedReadPermissions": [],
+    "inheritedEditPermissions": [],
+    "$entitySet": "assets",
+    "link": ""
+}

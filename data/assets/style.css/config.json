@@ -1,0 +1,15 @@
+{
+    "_id": "678e53900e46f951f9c21917",
+    "name": "style.css",
+    "modificationDate": {
+        "$$date": 1740829976123
+    },
+    "shortid": "ZqaY_xF",
+    "workspaceId": "678e53900e46f951f9c21913",
+    "creationDate": {
+        "$$date": 1737380752687
+    },
+    "inheritedReadPermissions": [],
+    "inheritedEditPermissions": [],
+    "$entitySet": "assets"
+}

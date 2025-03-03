@@ -1,0 +1,3524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Report</title>
+    <style>
+        {{ asset "./assets/style.css" }}
+        {{ asset "./styles.css" }}
+        {{ asset "./UI/index.css" }}
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-geo@3.0.0"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@sgratzl/chartjs-chart-boxplot"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
+    <script src="https://cdn.jsdelivr.net/npm/luxon@3.0.4/build/global/luxon.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@1.3.1"></script>
+</head>
+<body>
+
+{{!-- cover page --}}
+ <section class="cover-page">
+  <div class="top-banner">
+  <img  src="{#asset ./assets/competitoor_logo_posi.svg @encoding=dataURI}" alt="Competitoor Logo" />
+</div>
+
+
+  <div class="content">
+    <h1 class="main-title">Merchandising Analytics</h1>
+    <p class="prepared-text">Prepared For</p>
+    <p class="customer-name">{{currentUser}}</p>
+
+    <div class="circle-container">
+      <img class="circle-image prepared-text" src="{#asset ./assets/abstract-business-background.jpg @encoding=dataURI}" alt="Cover Image" />
+    </div>
+  </div>
+
+  <div class="footer">
+    <a class="website-link" href="https://competitoor.com" target="_blank">competitoor.com</a>
+  </div>
+</section>
+
+{{!-- table of contents --}}
+<section>
+<div class='toc'>
+  <h1 class='toc-title'>Table of contents</h1>
+  <ul class='toc'>
+  {{#toc}}
+  <li>
+    <div class='toc-content'>
+      <a href='#{{id}}' data-pdf-outline  data-pdf-outline-title='{{content}}' data-pdf-outline-parent='{{parent}}'>
+        {{content}}
+        <span>{{pageNumber}}</span>
+      </a>      
+    </div>
+  </li>
+  {{/toc}}
+  </ul>
+</div>
+</section>
+
+
+   <!-- Page 3: Executive Summary -->
+  
+  <section  class="executive-summary container new-page">
+    <div class="text-left">
+      {{{heading "h2" id="title1" class="text-left" content="Executive Summary: A Comprehensive Market Overview" }}}
+    </div>    
+      <h3 class="text-left"> Key Insights, Metrics, and Compliance Assurances </i></h3>
+      <br></br>
+      <h4><em>This section provides a market overview with key insights, SKU analysis, and compliance assurances, summarizing shop, category, and country coverage.</em></h4>
+      <br></br>
+      <div class="summary-content">
+          <div class="summary-item">
+              <img src="{#asset ./assets/sku-icon.png @encoding=dataURI}" alt="SKUs Icon" class="icon">
+              <p><strong>Total SKUs Analyzed:</strong> {{countersData.products}}</p>
+          </div>
+          <div class="summary-item">
+              <img src="{#asset ./assets/shop-icon.png @encoding=dataURI}" alt="Shops Icon" class="icon">
+              <p><strong>Number of Shops:</strong> {{countersData.shops}}</p>
+          </div>
+          <div class="summary-item">
+              <img src="{#asset ./assets/category-icon.jpeg @encoding=dataURI}" alt="Categories Icon" class="icon">
+              <p><strong>Number of Categories Covered:</strong> {{countersData.categories}}</p>
+          </div>
+          <div class="summary-item">
+              <img src="{#asset ./assets/country-icon.png @encoding=dataURI}" alt="Countries Icon" class="icon">
+              <p><strong>Number of Countries Covered:</strong> {{countersData.countries}}</p>
+
+          </div>
+      </div>
+      <div class="legal-note">
+          <p><strong>Legal Note:</strong> This report has been generated using publicly available data collected through lawful and ethical methodologies in accordance with applicable data protection regulations, including but not limited to GDPR (General Data Protection Regulation) and other local privacy laws. The data presented herein is derived exclusively from sources that are publicly accessible, such as e-commerce websites and online marketplaces, without infringing on proprietary or sensitive information. Competitoor ensures that all data collection processes are compliant with legal standards, and no unauthorized or intrusive techniques (e.g., scraping protected information, bypassing security protocols) have been employed.</p>
+          <p>For further details regarding our data collection policies, please refer to our <a href="#">Compliance Statement/Terms of Service</a> or contact our legal department at <a href="mailto:legal@competitoor.com">legal@competitoor.com</a>.</p>
+      </div>
+  </section>
+
+   <!-- Page 4: Charts Section -->
+
+  <section id="category-performance" class = "category-performance new-page">
+      {{{heading "h2" id="title2" class="text-left" content="Top Performing Categories and SKU Distribution by Shop" }}}
+
+      {{!-- <h2 class="text-left">Top Performing Categories and SKU Distribution by Shop</h2> --}}
+      <h3 class="text-left">Analysis of category performance and shop-level SKU distribution.</i></h3>
+      <br>
+      </br>
+      <h4><em>This page provides a visual analysis of the top-performing product categories and their SKU distribution across different stores. The pie chart highlights the proportion of each category, while the bar chart illustrates how SKUs are distributed among stores, offering insights into category dominance and inventory allocation.</em></h4>
+      <!-- Pie Chart -->
+      <div style="width: 500px; height: 500px; margin-left: 200px ;">
+          <canvas id="pieChart"></canvas>
+      </div>
+
+      <!-- Bar Chart (Grouped by Store) -->
+      <div>
+          <canvas id="barChartByStore" style="margin-left:120px; height:300px"></canvas>
+      </div>
+
+        
+
+
+        <script>
+            const pieChartData = {
+                labels: [],
+                datasets: [{
+                    data: [],
+                    backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40', '#FFCD56', '#36A3EB', '#CC65FE', '#F7464A']
+                }]
+            };
+
+            {{#each page4Data.pieChartData}}
+                pieChartData.labels.push('{{this.category}}');
+                pieChartData.datasets[0].data.push(parseFloat('{{this.percentage}}'));
+            {{/each}}
+
+            const ctx = document.getElementById('pieChart').getContext('2d');
+
+            new Chart(ctx, {
+                type: 'pie',
+                data: pieChartData,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'right'
+                        },
+                        tooltip: {
+                            enabled: false // Disable tooltips since we use custom labels
+                        }
+                    },
+                    layout: {
+                        padding: 40
+                    }
+                },
+                plugins: [{
+                    id: 'customLabels',
+                    afterDraw(chart) {
+                        const { ctx, chartArea: { left, right, top, bottom, width, height } } = chart;
+                        const dataset = chart.data.datasets[0];
+                        const meta = chart.getDatasetMeta(0);
+                        const total = dataset.data.reduce((a, b) => a + b, 0);
+
+                        ctx.font = "bold 14px Arial";
+                        ctx.fillStyle = "#000";
+                        ctx.textAlign = "center";
+
+                        let usedPositions = []; // Store label positions to avoid overlap
+
+                        meta.data.forEach((element, index) => {
+                            const percentage = ((dataset.data[index] / total) * 100).toFixed(2) + "%";
+                            
+                            const outerRadius = element.outerRadius;
+                            const angle = element.startAngle + (element.endAngle - element.startAngle) / 2;
+                            
+                            // Start arrow from the edge of the pie slice
+                            const startX = element.x + Math.cos(angle) * outerRadius;
+                            const startY = element.y + Math.sin(angle) * outerRadius;
+                            
+                            // Default label position
+                            const labelOffset = 40; // Adjust label distance
+                            let labelX = startX + Math.cos(angle) * labelOffset;
+                            let labelY = startY + Math.sin(angle) * labelOffset;
+
+                            // **Handle Overlaps: Move labels up/down if they overlap**
+                            let shift = 15; // Move distance when overlap is detected
+                            let maxTries = 5; // Limit adjustments
+                            let tries = 0;
+
+                            while (usedPositions.some(pos => Math.abs(pos.y - labelY) < shift) && tries < maxTries) {
+                                labelY += (angle < Math.PI ? shift : -shift); // Move up if top half, down if bottom
+                                tries++;
+                            }
+
+                            usedPositions.push({ x: labelX, y: labelY }); // Store position
+
+                            // Draw arrow line
+                            ctx.beginPath();
+                            ctx.moveTo(startX, startY);
+                            ctx.lineTo(labelX, labelY);
+                            ctx.strokeStyle = "#000";
+                            ctx.lineWidth = 2;
+                            ctx.stroke();
+
+                            // Draw label
+                            ctx.fillText(percentage, labelX, labelY - 5);
+                        });
+                    }
+                }]
+            });
+        </script>
+
+
+        <script>
+  document.addEventListener('DOMContentLoaded', function () {
+
+    const storesList = [
+      {{#each storesList}}
+        '{{this}}'{{#unless @last}},{{/unless}}
+      {{/each}}
+    ];
+
+    const topCategoryNames = [
+      {{#each topCategoryNames}}
+        '{{this}}'{{#unless @last}},{{/unless}}
+      {{/each}}
+    ];
+
+    const page4Data = {
+      barChartData: {
+        {{#each page4Data.barChartData}}
+        '{{@key}}': {
+          {{#each this}}
+            '{{@key}}': {{this}}{{#unless @last}},{{/unless}}
+          {{/each}}
+        }{{#unless @last}},{{/unless}}
+        {{/each}}
+      }
+    };
+
+    const labels = storesList;
+
+    const datasets = [];
+
+    topCategoryNames.forEach(category => {
+      const dataForCategory = [];
+
+      storesList.forEach(store => {
+        const storeStr = String(store); 
+        const categoryStr = String(category); 
+
+        const value = page4Data.barChartData[storeStr]?.[categoryStr] ?? 0; 
+
+
+        dataForCategory.push(value);
+      });
+
+      
+      datasets.push({
+        label: category, 
+        data: dataForCategory, 
+        backgroundColor: '#' + Math.floor(Math.random() * 16777215).toString(16),
+        borderWidth: 1,
+      });
+    });
+
+
+    // Create bar chart
+    const ctx = document.getElementById('barChartByStore').getContext('2d');
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: labels, 
+        datasets: datasets,
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: true }, 
+        },
+        scales: {
+          x: {
+            title: { display: true, text: 'Stores' },
+          },
+          y: {
+            title: { display: true, text: 'SKU Count' },
+            beginAtZero: true,
+          },
+        },
+      },
+    });
+  });
+        </script>
+
+  </section>
+  
+
+   <!-- Page 5: Customer’s Current Status - Country-Level Performance -->
+
+  <section id="geographical-analysis" class="sku-analysis-container container new-page">
+      {{{heading "h2" id="title3" class="text-left" content="Geographical Analysis of SKU Distribution" }}}
+      <h3 class="text-left">Understanding SKU allocation across countries for targeted insights</h3>
+      <br>
+      </br>
+      <h4 class="text-left"><em>This page provides a geographical analysis of SKU distribution, displaying a world map with highlighted countries and a bar chart showing SKU counts across different countries, offering insights into global SKU allocation.</em></h4>
+
+          <!-- Map at the top (takes more space) -->
+          <div class="geo-map-section">
+              <div id="geoMap"></div>
+          </div>
+        
+          <!-- Chart at the bottom (takes less space) -->
+          <div class="bar-chart-section">
+              <canvas id="countryBarChart"></canvas>
+          </div>
+
+        {{!-- <div id="geoMap"></div> <!-- The map container --> --}}
+
+        <script>
+          // Initialize the map
+          const map = L.map('geoMap').setView([20, 0], 2); // Default zoomed-out view
+
+          // Add base map tiles
+          L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+            attribution: '&copy; <a href="https://carto.com/">CARTO</a>'
+          }).addTo(map);
+
+          // List of highlighted countries
+          const highlightedCountries = [
+            {{#each countryList}}
+            '{{this}}'{{#unless @last}},{{/unless}}
+            {{/each}}
+          ];
+
+          // Fetch GeoJSON data for country boundaries
+          fetch('https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json')
+            .then(response => response.json())
+            .then(geojsonData => {
+              const bounds = [];
+
+              L.geoJSON(geojsonData, {
+                style: function (feature) {
+                  return {
+                    color: "#333", // Border color
+                    weight: 0.5,   // Reduced border thickness
+                    fillColor: "#cce5ff", // Highlighted country fill
+                    fillOpacity: 0.7 // Transparency of fill
+                  };
+                },
+                onEachFeature: (feature, layer) => {
+                  const countryName = feature.properties.name;
+
+                  if (highlightedCountries.includes(countryName)) {
+                    const center = layer.getBounds().getCenter();
+                    
+                    // Add country name as a marker
+                    L.marker(center, {
+                      icon: L.divIcon({
+                        className: 'country-label-marker',
+                        html: `<div>${countryName}</div>`,
+                        iconSize: [100, 40] // Adjust label size
+                      })
+                    }).addTo(map);
+
+                    bounds.push(layer.getBounds());
+                  }
+                }
+              }).addTo(map);
+
+              // Zoom to fit highlighted countries
+              if (bounds.length > 0) {
+                map.fitBounds(L.latLngBounds(bounds), { padding: [50, 50] });
+              }
+            })
+            .catch(error => console.error('Error loading GeoJSON:', error));
+        </script>
+
+      <script>
+        const countryLabels = [];
+        const skuCounts = [];
+        {{#each page5Data}}
+        countryLabels.push('{{this.country}}');
+        skuCounts.push({{this.sku_count}});
+        {{/each}}
+
+        const countrySkuChartData = {
+          labels: countryLabels,
+          datasets: [{
+            label: 'SKU Count by Country',
+            data: skuCounts,
+            backgroundColor: ['#36A2EB'], 
+            borderWidth: 1,
+            barThickness: 15,
+            categoryPercentage: 0.8,
+            barPercentage: 0.8
+          }]
+        };
+
+        // Render the chart
+        document.addEventListener('DOMContentLoaded', function () {
+          new Chart(document.getElementById('countryBarChart'), {
+            type: 'bar',
+            data: countrySkuChartData,
+            options: {
+              responsive: true,
+              maintainAspectRatio: true,
+              indexAxis: 'y',
+              plugins: {
+                legend: { display: false },
+                datalabels: {
+                  anchor: 'end',
+                  align: 'right',
+                  formatter: value => value.toLocaleString(), 
+                  color: 'black',
+                  font: {
+                    size: 12
+                  }
+                }
+              },
+              scales: {
+                x: {
+                  title: {
+                    display: true,
+                    text: 'SKU Count'
+                  },
+                  beginAtZero: true
+                },
+                y: {
+                  title: {
+                    display: true,
+                    text: 'Countries'
+                  },
+                  ticks: { padding: 10 }
+                }
+              }
+            },
+            plugins: [ChartDataLabels] 
+          });
+        });
+      </script>
+
+  </section>
+
+
+   <!-- Page 6: Shop-Level Performance -->
+  <section id="shop-performance" class="shop-performance new-page">
+    {{{heading "h2" id="title4" class="text-left" content="Performance Metrics Across Shops"}}}
+    <h3 class="text-left">Visualizing SKU Distribution Across Retail Locations</h3>
+    <br></br>
+    <h4><em>This page displays the percentage distribution of SKUs across different shops, providing insights into the relative SKU volumes each shop contributes to the total.</em></h4>
+
+    <div style="width: 700px; height: 700px; margin-top: 20px; margin-left: 35px">
+        <canvas id="shopChart"></canvas>
+    </div>
+
+    <script>
+    const shopChartData = {
+        labels: [],
+        datasets: [{
+            data: [],
+            backgroundColor: [
+                '#FF5733', '#33c3ff', '#ff33c3', '#ffbf33', '#33ff33', '#5733ff', '#ff9a33', '#33ff99',  
+                '#8E44AD', '#2ECC71', '#E74C3C', '#3498DB', '#F1C40F', '#1ABC9C', '#D35400', '#C0392B',  
+                '#7D3C98', '#27AE60', '#2980B9', '#F39C12', '#16A085', '#BDC3C7', '#E67E22', '#34495E'
+            ]
+        }]
+    };
+
+    {{#each page6Data}}
+        shopChartData.labels.push('{{@key}}');
+        shopChartData.datasets[0].data.push(parseFloat('{{this}}'));
+    {{/each}}
+
+    new Chart(document.getElementById('shopChart'), {
+        type: 'pie',
+        data: shopChartData,
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            aspectRatio: 1, 
+
+            plugins: {
+                datalabels: {
+                    color: '#000', 
+                    font: {
+                        weight: 'bold',
+                        size: 14
+                    },
+                    formatter: (value, context) => {
+                        return value.toFixed(2) + '%';
+                    },
+                    anchor: 'end',
+                    align: 'start',
+                    offset: 10,
+                    borderRadius: 5,
+                    backgroundColor: '#fff',
+                    padding: 5
+                }
+            }
+        },
+        plugins: [ChartDataLabels]
+    });
+    </script>
+  </section>
+
+
+
+  <!-- Page 7: SKU Trends by Product Category -->
+
+  <section id="sku-trends-category" class="sku-trends new-page ">
+      {{{heading "h2" id="title5" class="text-left" content="Seasonal SKU Trends by Product Category" }}}
+      <h3 class="text-left"> Analyzing Product Category Performance and Key Growth Patterns Over the Seasons of the Past One Year</i></h3>
+      <br></br>
+      <h4 class="text-left"><em>This page analyzes seasonal SKU trends by product category, comparing the volume of SKUs across different seasons over the past year, along with a separate analysis of growth percentages for each season, highlighting key performance shifts.</em></h4>
+      <br></br>
+      <div style="width: 700px; height: 500px;">
+          <canvas id="skuTrendsChart" style="margin-left:120px"></canvas>
+      </div>
+
+      <!-- New Bar Chart for Percentage Growth -->
+      <div style="width: 700px; height: 500px">
+          <canvas id="growthChart" style="margin-left:120px"></canvas>
+      </div>
+
+      <script>
+      const skuTrendsData = {
+          labels: [], 
+          datasets: [
+              {
+                  label: 'Winter',
+                  data: [],
+                  backgroundColor: '#FF6384',
+              },
+              {
+                  label: 'Spring',
+                  data: [],
+                  backgroundColor: '#36A2EB', 
+              },
+              {
+                  label: 'Summer',
+                  data: [],
+                  backgroundColor: '#FFCE56', 
+              },
+              {
+                  label: 'Fall',
+                  data: [],
+                  backgroundColor: '#4BC0C0', 
+              }
+          ]
+      };
+
+
+
+
+      // Prepare Growth Data  - page 7
+      const growthData = {
+          labels: [],
+          datasets: [
+              {
+                  label: 'Spring Growth (%)',
+                  data: [],
+                  backgroundColor: '#36A2EB',
+              },
+              {
+                  label: 'Summer Growth (%)',
+                  data: [],
+                  backgroundColor: '#FFCE56',
+              },
+              {
+                  label: 'Fall Growth (%)',
+                  data: [],
+                  backgroundColor: '#4BC0C0',
+              }
+          ]
+      };
+
+      // Dynamically populate SKU data and growth data from page7Data
+      {{#each page7Data}}
+          skuTrendsData.labels.push('{{this.category}}');
+          skuTrendsData.datasets[0].data.push({{this.seasonalData.Winter}});
+          skuTrendsData.datasets[1].data.push({{this.seasonalData.Spring}});
+          skuTrendsData.datasets[2].data.push({{this.seasonalData.Summer}});
+          skuTrendsData.datasets[3].data.push({{this.seasonalData.Fall}});
+
+          // Populate Growth Data
+          growthData.labels.push('{{this.category}}');
+          growthData.datasets[0].data.push({{this.growth.springGrowth.growthPercentage}});
+          growthData.datasets[1].data.push({{this.growth.summerGrowth.growthPercentage}});
+          growthData.datasets[2].data.push({{this.growth.fallGrowth.growthPercentage}});
+      {{/each}}
+
+      // Render SKU Trends Chart (Grouped Bar Chart for SKU Volume)
+      new Chart(document.getElementById('skuTrendsChart'), {
+          type: 'bar',
+          data: skuTrendsData,
+          options: {
+              responsive: true,
+              maintainAspectRatio: true,
+              plugins: {
+                  datalabels: {
+                      formatter: (value) => value.toFixed(0),
+                      color: '#fff',
+                      font: {
+                          weight: 'bold',
+                          size: 14
+                      }
+                  }
+              },
+              scales: {
+                  x: {
+                      stacked: false,
+                      title: {
+                          display: true,
+                          text: 'Product Categories'
+                      },
+                      barPercentage: 0.6,
+                      categoryPercentage: 0.8
+                  },
+                  y: {
+                      stacked: false,
+                      title: {
+                          display: true,
+                          text: 'SKU Volume'
+                      }
+                  }
+              }
+          }
+      });
+
+      // Render Growth Chart (Bar Chart for Percentage Growth)
+      new Chart(document.getElementById('growthChart'), {
+          type: 'bar',
+          data: growthData,
+          options: {
+              responsive: true,
+              maintainAspectRatio: true,
+              plugins: {
+                  datalabels: {
+                      formatter: (value) => value.toFixed(2) + '%',
+                      color: '#fff',
+                      font: {
+                          weight: 'bold',
+                          size: 14
+                      }
+                  }
+              },
+              scales: {
+                  x: {
+                      stacked: false,
+                      title: {
+                          display: true,
+                          text: 'Product Categories'
+                      },
+                      barPercentage: 0.6,
+                      categoryPercentage: 0.8
+                  },
+                  y: {
+                      stacked: false,
+                      title: {
+                          display: true,
+                          text: 'Growth Percentage'
+                      }
+                  }
+              }
+          }
+      });
+      </script>
+  </section>
+
+
+  <!-- Page 8: SKU Trends by Brand -->
+
+  <section id="sku-trends-brand" class="sku-trends new-page">
+      {{{heading "h2" id="title6" class="text-left" content="Seasonal SKU Trends by Brand" }}}
+      <h3 class="text-left"> Analyzing Brands Performance and Key Growth Patterns Over the Seasons</i></h3>
+      <br></br>
+      <h4 class="text-left"><em>This section analyzes seasonal SKU trends by brand, examining brand performance and growth patterns across different seasons, with a focus on SKU volume and growth percentages for each season.</em></h4>
+      <br></br>
+      <!-- SKU Trends Chart -->
+      <div style="width: 700px; height: 500px;">
+          <canvas id="skuTrendsBrandChart" style="margin-left:120px"></canvas>
+      </div>
+
+      <!-- Growth Chart -->
+      <div style="width: 700px; height: 500px;">
+          <canvas id="growthBrandChart" style="margin-left:120px"></canvas>
+      </div>
+
+      <script>
+            const skuTrendsBrandData = {
+                labels: [],
+                datasets: [
+                    {
+                        label: 'Winter',
+                        data: [],
+                        backgroundColor: '#FF6384', 
+                    },
+                    {
+                        label: 'Spring',
+                        data: [],
+                        backgroundColor: '#36A2EB', 
+                    },
+                    {
+                        label: 'Summer',
+                        data: [],
+                        backgroundColor: '#FFCE56', 
+                    },
+                    {
+                        label: 'Fall',
+                        data: [],
+                        backgroundColor: '#4BC0C0',
+                    }
+                ]
+            };
+
+            // Prepare Growth Data
+            const growthBrandData = {
+                labels: [],
+                datasets: [
+                    {
+                        label: 'Spring Growth (%)',
+                        data: [],
+                        backgroundColor: '#36A2EB',
+                    },
+                    {
+                        label: 'Summer Growth (%)',
+                        data: [],
+                        backgroundColor: '#FFCE56',
+                    },
+                    {
+                        label: 'Fall Growth (%)',
+                        data: [],
+                        backgroundColor: '#4BC0C0',
+                    }
+                ]
+            };
+
+            // Dynamically populate data from page8Data
+            {{#each page8Data}}
+                skuTrendsBrandData.labels.push('{{this.brand}}');
+                skuTrendsBrandData.datasets[0].data.push({{this.seasonalData.Winter}});
+                skuTrendsBrandData.datasets[1].data.push({{this.seasonalData.Spring}});
+                skuTrendsBrandData.datasets[2].data.push({{this.seasonalData.Summer}});
+                skuTrendsBrandData.datasets[3].data.push({{this.seasonalData.Fall}});
+
+                growthBrandData.labels.push('{{this.brand}}');
+                growthBrandData.datasets[0].data.push({{this.growth.springGrowth.growthPercentage}});
+                growthBrandData.datasets[1].data.push({{this.growth.summerGrowth.growthPercentage}});
+                growthBrandData.datasets[2].data.push({{this.growth.fallGrowth.growthPercentage}});
+            {{/each}}
+
+            // Render SKU Trends Chart (Clustered Column Chart)
+            new Chart(document.getElementById('skuTrendsBrandChart'), {
+                type: 'bar',
+                data: skuTrendsBrandData,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        datalabels: {
+                            formatter: (value) => value.toFixed(0),
+                            color: '#fff',
+                            font: {
+                                weight: 'bold',
+                                size: 14
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            stacked: false,
+                            title: {
+                                display: true,
+                                text: 'Brands'
+                            },
+                            barPercentage: 0.6,
+                            categoryPercentage: 0.8
+                        },
+                        y: {
+                            stacked: false,
+                            title: {
+                                display: true,
+                                text: 'SKU Volume'
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Render Growth Chart (Bar Chart for Seasonal Growth)
+            new Chart(document.getElementById('growthBrandChart'), {
+                type: 'bar',
+                data: growthBrandData,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        datalabels: {
+                            formatter: (value) => value.toFixed(2) + '%',
+                            color: '#fff',
+                            font: {
+                                weight: 'bold',
+                                size: 14
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            stacked: false,
+                            title: {
+                                display: true,
+                                text: 'Brands'
+                            },
+                            barPercentage: 0.6,
+                            categoryPercentage: 0.8
+                        },
+                        y: {
+                            stacked: false,
+                            title: {
+                                display: true,
+                                text: 'Growth Percentage'
+                            }
+                        }
+                    }
+                }
+            });
+      </script>
+  </section>
+
+  {{!-- page 9 Category Mix by Brand --}}
+
+  {{!-- <section class = "category-mix new-page">
+        {{{heading "h2" id="title7" class="text-left" content="Category Mix by Brand" }}}
+      <h3 class="text-left"> Visualizing the Contribution of Product Categories to Each Brand's SKU Distribution</i></h3>
+      <br></br>
+      <h4 class="text-left"><em>This section visualizes the contribution of product categories to each brand's SKU distribution, showcasing the percentage of SKU mix for various brands across different categories.</em></h4>
+      <br></br>
+      <div style=" margin-left: 10px; height: 700px; width:700px"> <!-- Increased height -->
+          <canvas id="categoryMixByBrandChart"  style="max-height: 180%"></canvas>
+      </div>
+
+      
+
+      <script>
+      document.addEventListener('DOMContentLoaded', function () {
+          const page9Data = [
+              {{#each page9Data}}
+              {
+                  category: '{{category}}',
+                  brandPercentages: {
+                      {{#each brandPercentages}}
+                      '{{@key}}': {{this}}{{#unless @last}},{{/unless}}
+                      {{/each}}
+                  }
+              }{{#unless @last}},{{/unless}}
+              {{/each}}
+          ];
+
+          const categoryMixByBrandData = {
+              labels: [], 
+              datasets: [] 
+          };
+
+        const categoryColors = [
+      '#FF5733', '#33FF57', '#3357FF', '#F0F033', '#FF33A1', 
+      '#A1FF33', '#33A1FF', '#A133FF', '#FF7A33', '#33FF7A',
+      '#FF8C00', '#8B008B', '#FFD700', '#00CED1', '#DC143C', 
+      '#32CD32', '#4682B4', '#8A2BE2', '#FF4500', '#2E8B57',
+      '#9932CC', '#20B2AA', '#6495ED', '#FF1493', '#7FFF00'
+  ];
+
+
+          let colorIndex = 0;
+
+          page9Data.forEach((item) => {
+              const category = item.category;
+              const categoryColor = categoryColors[colorIndex];
+              colorIndex = (colorIndex + 1) % categoryColors.length;
+
+              const dataset = {
+                  label: category,
+                  data: [], 
+                  backgroundColor: categoryColor
+              };
+
+              Object.keys(item.brandPercentages).forEach((brand) => {
+                  if (!categoryMixByBrandData.labels.includes(brand)) {
+                      categoryMixByBrandData.labels.push(brand);
+                  }
+              });
+
+              const datasetData = categoryMixByBrandData.labels.map(() => 0);
+
+              Object.entries(item.brandPercentages).forEach(([brand, percentage]) => {
+                  const brandIndex = categoryMixByBrandData.labels.indexOf(brand);
+                  datasetData[brandIndex] = Math.ceil(percentage) || 0;
+              });
+
+              dataset.data = datasetData;
+              categoryMixByBrandData.datasets.push(dataset);
+          });
+
+          // Render the chart
+          new Chart(document.getElementById('categoryMixByBrandChart'), {
+              type: 'bar',
+              data: categoryMixByBrandData,
+              options: {
+                  responsive: true,
+                  maintainAspectRatio: false,
+                  plugins: {
+                      legend: {
+                          display: true,
+                          position: 'bottom'
+                      },
+                      // datalabels: {
+                      //     formatter: (value) => value.toFixed(2) + '%',
+                      //     color: '#fff',
+                      //     font: {
+                      //         weight: 'bold',
+                      //         size: 12
+                      //     }
+                      // }
+                  },
+                  scales: {
+                      x: {
+                          stacked: true,
+                          title: {
+                              display: true,
+                              text: 'Brands'
+                          }
+                      },
+                      y: {
+                          stacked: true,
+                          max: 100,
+                          title: {
+                              display: true,
+                              text: 'Percentage of SKU Mix'
+                          },
+                          ticks: {
+                              callback: (value) => value + '%'
+                          }
+                      }
+                  }
+              }
+          });
+      });
+      </script>
+  </section> --}}
+
+
+<section class="category-mix new-page">
+    {{{heading "h2" id="title7" class="text-left" content="Category Mix by Brand" }}}
+    <h3 class="text-left">Visualizing the Contribution of Product Categories to Each Brand's SKU Distribution</h3>
+    <br></br>
+    <h4 class="text-left"><em>This section visualizes the contribution of product categories to each brand's SKU distribution, showcasing the percentage of SKU mix for various brands across different categories.</em></h4>
+    <br></br>
+    <div style="margin-left: 10px; height: 700px; width: 700px;"> <!-- Increased height -->
+        <canvas id="categoryMixByBrandChart" style="max-height: 180%"></canvas>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const page9Data = [
+            {{#each page9Data}}
+            {
+                category: '{{category}}',
+                brandPercentages: {
+                    {{#each brandPercentages}}
+                    '{{@key}}': {{this}}{{#unless @last}},{{/unless}}
+                    {{/each}}
+                }
+            }{{#unless @last}},{{/unless}}
+            {{/each}}
+        ];
+
+        const categoryMixByBrandData = {
+            labels: [],
+            datasets: []
+        };
+
+        const categoryColors = [
+            '#FF5733', '#33FF57', '#3357FF', '#F0F033', '#FF33A1', 
+            '#A1FF33', '#33A1FF', '#A133FF', '#FF7A33', '#33FF7A',
+            '#FF8C00', '#8B008B', '#FFD700', '#00CED1', '#DC143C', 
+            '#32CD32', '#4682B4', '#8A2BE2', '#FF4500', '#2E8B57',
+            '#9932CC', '#20B2AA', '#6495ED', '#FF1493', '#7FFF00'
+        ];
+
+        let colorIndex = 0;
+
+        page9Data.forEach((item) => {
+            const category = item.category;
+            const categoryColor = categoryColors[colorIndex];
+            colorIndex = (colorIndex + 1) % categoryColors.length;
+
+            const dataset = {
+                label: category,
+                data: [],
+                backgroundColor: categoryColor
+            };
+
+            // Add all unique brand names to labels
+            Object.keys(item.brandPercentages).forEach((brand) => {
+                if (!categoryMixByBrandData.labels.includes(brand)) {
+                    categoryMixByBrandData.labels.push(brand);
+                }
+            });
+
+            const datasetData = categoryMixByBrandData.labels.map(() => 0);
+
+            // Assign the percentages to each brand
+            Object.entries(item.brandPercentages).forEach(([brand, percentage]) => {
+                const brandIndex = categoryMixByBrandData.labels.indexOf(brand);
+                datasetData[brandIndex] = Math.ceil(percentage) || 0;
+            });
+
+            dataset.data = datasetData;
+            categoryMixByBrandData.datasets.push(dataset);
+        });
+
+        // Render the chart
+        new Chart(document.getElementById('categoryMixByBrandChart'), {
+            type: 'bar',
+            data: categoryMixByBrandData,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'bottom'
+                    },
+                },
+                scales: {
+                    x: {
+                        stacked: true,
+                        title: {
+                            display: true,
+                            text: 'Brands'
+                        }
+                    },
+                    y: {
+                        stacked: true,
+                        max: 100, // Ensure y-axis reaches 100% value
+                        title: {
+                            display: true,
+                            text: 'Percentage of SKU Mix'
+                        },
+                        ticks: {
+                            callback: (value) => value + '%'
+                        }
+                    }
+                }
+            }
+        });
+    });
+    </script>
+</section>
+
+
+
+<!--  Gender Mix by Brand - Analysis Section -->
+
+  <section id="gender-mix" class="category-mix new-page">
+    {{{heading "h2" id="title8" class="text-left" content="Gender Mix by Brand: SKU Distribution Analysis" }}}
+
+    <h3 class="text-left">Visualizing Gender-Specific SKU Targeting Across Leading Brands</h3>
+    <br></br>
+    <h4 class="text-left"><em>This section analyzes the gender-specific SKU distribution across leading brands, highlighting their focus on male and female-targeted products. Using a stacked bar chart, it visually compares the proportion of SKUs for each gender, offering insights into brand positioning and market segmentation.</em></h4>
+    <br></br>
+    <div style="display: flex; justify-content: center; align-items: center; height: 700px;">
+        <canvas id="genderMixChart" style="max-width: 100%; max-height: 120%;"></canvas>
+      </div>
+    <script>
+      (function() {
+        const chartData = [
+          {{#each genderMixData}}
+          {
+            brand: "{{brand}}",
+            malePercentage: {{malePercentage}},
+            femalePercentage: {{femalePercentage}},
+          },
+          {{/each}}
+        ];
+
+        const ctx = document.getElementById("genderMixChart").getContext('2d');
+
+        const maleData = chartData.map(item => item.malePercentage);
+        const femaleData = chartData.map(item => item.femalePercentage);
+        const labels = chartData.map(item => item.brand);
+
+        new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: labels,
+            datasets: [
+              {
+                label: 'Male Products',
+                data: maleData,
+                backgroundColor: 'rgba(54, 162, 235, 0.7)',  // Blue color
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1,
+                stack: 'gender',
+              },
+              {
+                label: 'Female Products',
+                data: femaleData,
+                backgroundColor: 'rgba(255, 99, 132, 0.7)',  // Pink color
+                borderColor: 'rgba(255, 99, 132, 1)',
+                borderWidth: 1,
+                stack: 'gender',
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                position: 'top',
+              },
+              tooltip: {
+                callbacks: {
+                  label: function(tooltipItem) {
+                    const dataset = tooltipItem.dataset;
+                    return `${dataset.label}: ${tooltipItem.raw}%`;
+                  }
+                }
+              },
+            },
+            scales: {
+              x: {
+                title: {
+                  display: true,
+                  text: 'Brands',
+                },
+              },
+              y: {
+              stacked: true,
+              title: {
+                display: true,
+                text: 'Percentage of SKU Distribution'
+              },
+              beginAtZero: true,
+              max: 100, // Ensure the maximum is 100% for full scale
+              ticks: {
+                callback: function(value) {
+                  return `${value}%`;  // Display percentage on the y-axis
+                }
+              }
+            }
+            },
+            indexAxis: 'x',  // Stacked bar chart requires index axis set to 'x'
+            elements: {
+              bar: {
+                borderWidth: 2,
+              },
+            },
+          },
+        });
+      })();
+    </script>
+
+  </section>
+
+
+  {{!-- pricing architecture for top categories violin/box plot --}}
+
+  <section  class="new-page">
+    {{{heading "h2" id="title9" class="text-left" style="margin-left:40px" content="Pricing Architecture" }}}
+    <h3 class="text-left" style="margin-left:40px">Exploring the Price Distribution of Major Competitor Brands</h3>
+    <br></br>
+    <h4 class="text-left" style="margin-left:40px"><em>This section provides an in-depth analysis of pricing distribution across major competitor brands using violin charts. It visualizes key statistical insights, including minimum, median, and maximum prices, offering a clear comparison of price positioning in the market.</em></h4>
+    <br></br>
+    {{#each violinData}}
+      <section class="violin-chart-container">
+        <h2 class="text-left">Category: {{@key}}</h2>
+        <br></br>
+        <div style=" height: 700px;">
+          <canvas id="{{@key}}ViolinChart" style="max-width: 100%; max-height: 100%;"></canvas>
+        </div>
+        <script>
+          (function() {
+            const chartData = [
+              {{#each this}}
+              {
+                label: "{{violin.sku}}",
+                country: "{{country}}",
+                brand: "{{brand}}",
+                data: {
+                  max: {{violin.max}},
+                  median: {{violin.median}},
+                  min: {{violin.min}},
+                  coords: {{{toJSON violin.coords}}},
+                  q1: {{violin.q1}},
+                  q3: {{violin.q3}},
+                  
+                }
+              },
+              {{/each}}
+            ];
+            const ctx = document.getElementById("{{@key}}ViolinChart").getContext('2d');
+            new Chart(ctx, {
+              type: 'violin',
+              data: {
+                labels: chartData.map(item => ({
+                  sku: item.label,
+                  country: item.country,
+                  brand: item.brand,
+                  max: item.data.max,
+                  median: item.data.median,
+                  min: item.data.min,
+                
+                })),
+                datasets: [{
+                  label: 'Price Distribution',
+                  data: chartData.map(item => item.data),
+                  backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                  borderColor: 'rgba(75, 192, 192, 1)',
+                  borderWidth: 1
+                }],
+              },
+              options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                  legend: {
+                    display: false,
+                  },
+                  tooltip: {
+                    callbacks: {
+                      label: function(tooltipItem) {
+                        const dataset = chartData[tooltipItem.dataIndex];
+                        const value = dataset.data;
+                        return `${dataset.country} | ${dataset.brand}\nMax: ${value.max}\nMedian: ${value.median}\nMin: ${value.min}`;
+                      }
+                    }
+                  },
+                  annotation: {
+                    annotations: chartData.flatMap((item, index) => [
+                      {
+                        type: 'label',
+                        xValue: index,
+                        yValue: item.data.max + 20,
+                        color: 'rgba(0, 0, 0, 0.7)',
+                        content: `SKU: ${item.label}`,
+                        font: {
+                          size: 12,
+                          family: 'Arial',
+                        },
+                        padding: 5,
+                        color: 'black',
+                      },
+                      {
+                        type: 'label',
+                        xValue: index,
+                        yValue: -50,
+                        content: `Max: ${item.data.max}`,
+                        font: { size: 10 },
+                        color: 'rgba(0, 0, 0, 0.7)',
+                      },
+                      {
+                        type: 'label',
+                        xValue: index,
+                        yValue: -200,
+                        content: `Median: ${Math.round(item.data.median)}`,
+                        font: { size: 10 },
+                        color: 'rgba(0, 0, 0, 0.7)',
+                      },
+                      {
+                        type: 'label',
+                        xValue: index,
+                        yValue: -400,
+                        content: `Min: ${item.data.min}`,
+                        font: { size: 10 },
+                        color: 'rgba(0, 0, 0, 0.7)',
+                      }
+                    
+                    ])
+                  }
+                },
+                scales: {
+                  x: {
+                    title: {
+                      display: true,
+                      text: 'Brands',
+                    },
+                    ticks: {
+                      callback: function(value, index, ticks) {
+                        const label = chartData[index];
+                        return `${label.country} | ${label.brand}`;
+                      },
+                      autoSkip: false,
+                      font: {
+                        size: 10,
+                      },
+                    },
+                  },
+                  y: {
+                    title: {
+                      display: true,
+                      text: 'Price (€)',
+                    },
+                    suggestedMin: -500, // Adjust this based on your lowest value
+                  },
+                },
+              },
+            });
+          })();
+        </script>
+      </section>
+    {{/each}}
+
+  </section>
+
+
+
+
+ {{!-- Performance Over Time: New Product Trends --}}
+
+  <section id="new-product-trends" class="new-page category-mix">
+      {{{heading "h2" id="title10" class="text-left" content="Performance Over Time: New Product Trends" }}}
+      <h3 class="text-left">Analyzing Monthly Introduction of New SKUs Across Key Brands</h3>
+      <br></br>
+      <h4 class="text-left"><em>This section tracks the monthly introduction of new SKUs across key brands, providing insights into product launch trends over time. A dynamic line chart visualizes fluctuations in new product entries, helping identify seasonal patterns and brand strategies.</em></h4>
+      <br></br>
+      <div style="display: flex; justify-content: center; align-items: center; height: 800px;">
+          <canvas id="newProductsTrendChart" style="max-width: 100%; max-height: 100%;"></canvas>
+      </div>
+        
+      <script>
+        (function() {
+          const chartData = [
+            {{#each trendsData}}
+            {
+              brand: "{{@key}}", // Brand name is the key
+              data: [
+                {{#each this}}
+                {
+                  date: "{{@key}}", // Date (Month-Year)
+                  newProducts: {{this.newProducts}}, 
+                },
+                {{/each}}
+              ]
+            },
+            {{/each}}
+          ];
+
+          const getRandomColor = () => {
+            const letters = "0123456789ABCDEF";
+            let color = "#";
+            for (let i = 0; i < 6; i++) {
+              color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+          };
+
+          const processChartData = (data) => {
+            const labels = []; 
+            const datasets = [];
+
+            const brandColors = {}; 
+
+            data.forEach(({ brand, data: dates }) => {
+              const brandData = [];
+              if (!brandColors[brand]) brandColors[brand] = getRandomColor(); // Assign random color
+
+              dates.forEach(({ date, newProducts }) => {
+                const monthLabel = new Date(date).toLocaleString("en-US", { month: "short", year: "numeric" });
+
+                if (!labels.includes(monthLabel)) labels.push(monthLabel);
+
+                brandData.push(newProducts);
+              });
+
+              datasets.push({
+                label: brand,
+                data: brandData,
+                borderColor: brandColors[brand],
+                backgroundColor: brandColors[brand],
+                fill: false,
+                tension: 0.4, 
+              });
+            });
+
+            labels.sort((a, b) => {
+              const [monthA, yearA] = a.split(' ');
+              const [monthB, yearB] = b.split(' ');
+              return new Date(`${monthA} 1, ${yearA}`) - new Date(`${monthB} 1, ${yearB}`);
+            });
+
+            return { labels, datasets };
+          };
+
+          const chartDataFormatted = processChartData(chartData);
+
+          // Render Chart
+          new Chart(document.getElementById("newProductsTrendChart").getContext("2d"), {
+            type: "line",
+            data: {
+              labels: chartDataFormatted.labels,
+              datasets: chartDataFormatted.datasets,
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              plugins: {
+                legend: { display: true, position: "top" },
+                tooltip: { enabled: true },
+              },
+              scales: {
+                x: {
+                  title: { display: true, text: "Month" },
+                },
+                y: {
+                  title: { display: true, text: "New Products" },
+                  beginAtZero: true,
+                },
+              },
+            },
+          });
+        })();
+      </script>
+
+  </section>
+
+ {{!-- SKU Trends in Promotion: A Yearly Overview --}}
+
+  <section id="sku-trends-promotion" class="new-page category-mix">
+      {{{heading "h2" id="title11" class="text-left" content="SKU Trends in Promotion: A Yearly Overview" }}}
+      <h3 class="text-left">Tracking the Monthly Progression of Promoted SKUs Across Leading Brands</h3>
+      <br></br>
+      <h4 class="text-left"><em>This section visualizes the monthly progression of SKUs in promotion across leading brands. A dynamic line chart illustrates how promotional trends evolve over time, enabling insights into seasonal promotions and brand-specific discount strategies.</em></h4>,
+      <br></br>
+      <div style="display: flex; justify-content: center; align-items: center; height: 800px;">
+          <canvas id="skuInPromoTrendChart" style="max-width: 100%; max-height: 100%;"></canvas>
+        </div>
+    
+        
+      <script>
+        (function() {
+          const chartData = [
+            {{#each trendsData}}
+            {
+              brand: "{{@key}}", // Brand name is the key
+              data: [
+                {{#each this}}
+                {
+                  date: "{{@key}}", // Date (Month-Year)
+                  promoCount: {{this.promoCount}}, 
+                },
+                {{/each}}
+              ]
+            },
+            {{/each}}
+          ];
+
+          // Utility Function to Generate Random Color
+          const getRandomColor = () => {
+            const letters = "0123456789ABCDEF";
+            let color = "#";
+            for (let i = 0; i < 6; i++) {
+              color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+          };
+
+          // Process Data for Chart
+          const processChartData = (data) => {
+            const labels = []; // X-Axis Labels (Month-Year)
+            const datasets = [];
+
+            const brandColors = {}; // Store random colors for each brand
+
+            // Iterate through each brand and extract trends
+            data.forEach(({ brand, data: dates }) => {
+              const brandData = [];
+              if (!brandColors[brand]) brandColors[brand] = getRandomColor(); // Assign random color
+
+              dates.forEach(({ date, promoCount }) => {
+                const monthLabel = new Date(date).toLocaleString("en-US", { month: "short", year: "numeric" });
+
+                // Add unique months to labels
+                if (!labels.includes(monthLabel)) labels.push(monthLabel);
+
+                // Push the 'newProducts' for the given date
+                brandData.push(promoCount);
+              });
+
+              datasets.push({
+                label: brand,
+                data: brandData,
+                borderColor: brandColors[brand],
+                backgroundColor: brandColors[brand],
+                fill: false,
+                tension: 0.4, // Curve the line slightly
+              });
+            });
+
+            // Sort labels in chronological order
+            labels.sort((a, b) => {
+              const [monthA, yearA] = a.split(' ');
+              const [monthB, yearB] = b.split(' ');
+              return new Date(`${monthA} 1, ${yearA}`) - new Date(`${monthB} 1, ${yearB}`);
+            });
+
+            return { labels, datasets };
+          };
+
+          const chartDataFormatted = processChartData(chartData);
+
+          // Render Chart
+          new Chart(document.getElementById("skuInPromoTrendChart").getContext("2d"), {
+            type: "line",
+            data: {
+              labels: chartDataFormatted.labels,
+              datasets: chartDataFormatted.datasets,
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              plugins: {
+                legend: { display: true, position: "top" },
+                tooltip: { enabled: true },
+              },
+              scales: {
+                x: {
+                  title: { display: true, text: "Month" },
+                },
+                y: {
+                  title: { display: true, text: "SKU in promotion" },
+                  beginAtZero: true,
+                },
+              },
+            },
+          });
+        })();
+      </script>
+
+  </section>
+
+ {{!-- Average Discount Trends: SKUs in Promotion --}}
+
+  <section id="avg-discount-trends" class="new-page category-mix">
+      {{{heading "h2" id="title12" class="text-left" content="Average Discount Trends: SKUs in Promotion" }}}
+      <h3 class="text-left">Monthly Fluctuations in Discount Percentages for Promoted Products</h3>
+      <br></br>
+      <h4 class="text-left"><em>This section visualizes the monthly fluctuations in average discount percentages for promoted SKUs. The line chart tracks discount trends across different brands, offering insights into promotional strategies and discount variations over time.</em></h4>
+      <br></br>
+      <div style="display: flex; justify-content: center; align-items: center; height: 800px;">
+          <canvas id="averagePromoTrendChart" style="max-width: 100%; max-height: 100%;"></canvas>
+        </div>
+
+      <script>
+        (function() {
+          const chartData = [
+            {{#each trendsData}}
+            {
+              brand: "{{@key}}", // Brand name is the key
+              data: [
+                {{#each this}}
+                {
+                  date: "{{@key}}", // Date (Month-Year)
+                  promoAvg: {{this.promoAvg}}, 
+                },
+                {{/each}}
+              ]
+            },
+            {{/each}}
+          ];
+
+          const getRandomColor = () => {
+            const letters = "0123456789ABCDEF";
+            let color = "#";
+            for (let i = 0; i < 6; i++) {
+              color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+          };
+
+          const processChartData = (data) => {
+            const labels = []; 
+            const datasets = [];
+
+            const brandColors = {}; 
+
+            data.forEach(({ brand, data: dates }) => {
+              const brandData = [];
+              if (!brandColors[brand]) brandColors[brand] = getRandomColor(); 
+
+              dates.forEach(({ date, promoAvg }) => {
+                const monthLabel = new Date(date).toLocaleString("en-US", { month: "short", year: "numeric" });
+
+                if (!labels.includes(monthLabel)) labels.push(monthLabel);
+
+                brandData.push(promoAvg);
+              });
+
+              datasets.push({
+                label: brand,
+                data: brandData,
+                borderColor: brandColors[brand],
+                backgroundColor: brandColors[brand],
+                fill: false,
+                tension: 0.4, 
+              });
+            });
+
+            labels.sort((a, b) => {
+              const [monthA, yearA] = a.split(' ');
+              const [monthB, yearB] = b.split(' ');
+              return new Date(`${monthA} 1, ${yearA}`) - new Date(`${monthB} 1, ${yearB}`);
+            });
+
+            return { labels, datasets };
+          };
+
+          const chartDataFormatted = processChartData(chartData);
+
+          // Render Chart
+          new Chart(document.getElementById("averagePromoTrendChart").getContext("2d"), {
+            type: "line",
+            data: {
+              labels: chartDataFormatted.labels,
+              datasets: chartDataFormatted.datasets,
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              plugins: {
+                legend: { display: true, position: "top" },
+                tooltip: { enabled: true },
+              },
+              scales: {
+                x: {
+                  title: { display: true, text: "Month" },
+                },
+                y: {
+                  title: { display: true, text: "Average discount SKU in promotion" },
+                  beginAtZero: true,
+                },
+              },
+            },
+          });
+        })();
+      </script>
+
+  </section>
+
+ {{!-- A Comparative Overview of SKU Count and Average Price Across Leading Competitors --}}
+
+  <section id="competitive-insights" class="category-mix">
+    {{{heading "h2" id="title13" class="text-left" content="Competitive Insights" }}}
+    <h3 class="text-left">A Comparative Overview of SKU Count and Average Price Across Leading Competitors</h3>
+    <br></br>
+    <h4 class="text-left"><em>This section provides competitive insights by visualizing SKU count and average price comparisons across leading competitors. The bar charts highlight how different brands perform in various regions, helping to identify pricing trends and market positioning.</em></h4>
+    <br></br>
+    {{#each competitorMetrices}}
+      {{#if @odd}}
+        <!-- Start a new page after every two charts (if it's an odd index) -->
+        <div style="page-break-before: always;"></div>
+      {{/if}}
+
+      <div style="display: flex; justify-content: space-between; margin-bottom: 30px;">
+        <!-- Chart for the first country (or region) -->
+        <div style="width: 100%; height: 50%; margin-left: 100px;">
+          <canvas id="chart-{{@key}}"></canvas>
+          <div class="chart-title text-left">Competitors in {{@key}}</div>
+
+        </div>
+
+        <!-- Check if there's another region to group with -->
+        {{#if @indexIsOdd}}
+          <div style="width: 100%; height:50%;">
+            <div class="chart-title text-left">Competitors in {{@key}}</div>
+            <canvas id="chart-{{@key}}"></canvas>
+          </div>
+        {{/if}}
+      </div>
+
+      <script>
+        (function(regionKey) {
+          const ctx = document.getElementById('chart-' + regionKey).getContext('2d');
+          const data = {
+            labels: [
+              {{#each this.brands}}
+                "{{@key}}",
+              {{/each}}
+            ],
+            datasets: [
+              {
+                label: "SKU Count",
+                data: [
+                  {{#each this.brands}}
+                    {{this.skuCount}},
+                  {{/each}}
+                ],
+                backgroundColor: "rgba(54, 162, 235, 0.6)",
+                borderColor: "rgba(54, 162, 235, 1)",
+                borderWidth: 1,
+                yAxisID: 'y1'
+              },
+              {
+                label: "Average Price",
+                data: [
+                  {{#each this.brands}}
+                    {{this.avgPrice}},
+                  {{/each}}
+                ],
+                backgroundColor: "rgba(255, 99, 132, 0.6)",
+                borderColor: "rgba(255, 99, 132, 1)",
+                borderWidth: 1,
+                yAxisID: 'y2'
+              }
+            ]
+          };
+
+          const options = {
+            responsive: true,
+            barPercentage: 0.8,
+            categoryPercentage: 0.9,
+            scales: {
+              y1: {
+                type: 'linear',
+                position: 'left',
+                title: {
+                  display: true,
+                  text: 'SKU Count',
+                  font: {
+                    size: 14,
+                    weight: 'bold'
+                  },
+                  color: '#87CEFA',
+                },
+                ticks: {
+                  beginAtZero: true,
+                  precision: 0,
+                }
+              },
+              y2: {
+                type: 'linear',
+                position: 'right',
+                title: {
+                  display: true,
+                  text: 'Average Price',
+                  font: {
+                    size: 14,
+                    weight: 'bold'
+                  },
+                  color: '#e00000',
+                },
+                ticks: {
+                  beginAtZero: true,
+                  precision: 0,              
+                }
+              },
+              x: {
+                grid: {
+                  lineWidth: 2,
+                  color: '#cccccc'
+                }
+              }
+            },
+            plugins: {
+              legend: {
+                display: true,
+                position: 'top'
+              },
+              tooltip: {
+                mode: 'index',
+                intersect: false
+              }
+            }
+          };
+
+          new Chart(ctx, {
+            type: 'bar',
+            data: data,
+            options: options
+          });
+        })('{{@key}}');
+      </script>
+    {{/each}}
+
+  </section>
+
+  {{!-- Entry Prices by Product Category and Brand --}}
+
+  <section id="entry-prices" class="new-page category-mix">
+    {{{heading "h2" id="title14" class="text-left" content="Entry Prices by Product Category and Brand" }}}
+    <h3 class="text-left">Analyzing the Range of Entry Prices Across Brands and Categories</h3>
+    <br></br>
+    <h4 class="text-left"><em>This section presents a scatter plot analysis of entry prices across brands and product categories. The visualization provides insights into pricing strategies, highlighting variations in entry-level pricing among competitors.</em></h4>
+    <br></br>
+    {{#each entryPriceData}}
+      {{#if @indexIsEven}}
+        <!-- Start a new row for every two charts -->
+        <div class="chart-row">
+      {{/if}}
+
+        <div class="chart-wrapper">
+          <div id="chart-container-{{@key}}" style="width: 100%; height: 50%; margin-left:60px">
+            <canvas id="chartprice-{{@key}}"></canvas>
+            <div class="country-title text-left">Entry Price Analysis - {{@key}}</div>
+
+          </div>
+        </div>
+
+        <script>
+          (function() {
+            const ctx = document.getElementById('chartprice-{{@key}}').getContext('2d');
+
+            // Data transformation for the current country
+            const data = [
+              {{#each this}}
+              {
+                brand: "{{brand}}",
+                entryPrice: {{entryPrice}},
+                category: "{{category}}",
+                currency: "{{currency}}"
+              },
+              {{/each}}
+            ];
+
+            // Generate scatter plot data points
+            const scatterData = data.map(entry => ({
+              x: entry.brand,
+              y: entry.entryPrice,
+              label: entry.category,
+            }));
+
+            // Assign random colors to each category
+            const categoryColors = {};
+            data.forEach(entry => {
+              if (!categoryColors[entry.category]) {
+                categoryColors[entry.category] = `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 0.8)`;
+              }
+            });
+
+            // Scatter datasets for each category
+            const datasets = Object.keys(categoryColors).map(category => ({
+              label: category,
+              data: scatterData
+                .filter(point => point.label === category)
+                .map(point => ({ x: point.x, y: point.y })),
+              backgroundColor: categoryColors[category],
+              pointRadius: 12, // Increased point size
+              pointHoverRadius: 2, // Larger points on hover
+            }));
+
+            // Chart rendering
+            new Chart(ctx, {
+              type: 'scatter',
+              data: {
+                datasets: datasets,
+              },
+              options: {
+                responsive: true,
+                plugins: {
+                  legend: {
+                    position: 'top',
+                  },
+                  title: {
+                    display: true,
+                    text: 'Entry Price by Brand and Category'
+                  }
+                },
+                scales: {
+                  x: {
+                    type: 'category',
+                    title: {
+                      display: true,
+                      text: 'Brand'
+                    }
+                  },
+                  y: {
+                    title: {
+                      display: true,
+                      text: 'Entry Price ({{#each this}}{{#if @first}}{{currency}}{{/if}}{{/each}})',
+                    },
+                    ticks: {
+                      stepSize: 2000, // Reduced intervals
+                    }
+                  }
+                }
+              }
+            });
+          })();
+        </script>
+
+      {{#if @indexIsOdd}}
+        </div> <!-- Close the row after two charts -->
+      {{/if}}
+
+      {{#if @indexIsOdd}}
+        <div style="page-break-before: always;"></div>
+      {{/if}}
+
+    {{/each}}
+
+  </section>
+
+
+  {{!-- Price Positioning by Brand --}}
+
+  <section id="category-mix-analysis" class = "category-mix new-page">
+  {{{heading "h2" id="title15" class="text-left" content="Price Positioning by Brand" }}}
+  <h3 class="text-left">Analyze price positioning of brands to understand market dynamics, segment leaders, and potential pricing opportunities.</h3>
+  <br></br>
+  <h4 class="text-left"><em>This section analyzes the price positioning of brands across various pricing categories, focusing on entry price, median price, and top price. The bar charts highlight the comparative distribution of these prices, helping to understand each brand's pricing strategy and its market positioning.</em></h4>
+  <br></br>
+      {{#each pricePositioningData}}
+      <div style="width: 100%; height: 50%; margin-left:60px">
+        <canvas id="chartb-{{@key}}" ></canvas>
+        <h3 class="text-left">{{@key}} Price Positioning by Brand (in {{#each this}}{{#if @first}}{{currency}}{{/if}}{{/each}})</h3>
+
+      </div>
+      {{/each}}
+
+      <script>
+        {{#each pricePositioningData}}
+        const ctx{{@key}} = document.getElementById('chartb-{{@key}}').getContext('2d');
+        new Chart(ctx{{@key}}, {
+          type: 'bar',
+          data: {
+            labels: [{{#each this}}{{#if @index}}, {{/if}}"{{brand}}"{{/each}}],
+            datasets: [
+              {
+                label: "Entry Price",
+                backgroundColor: "rgba(75, 192, 192, 0.6)",
+                borderColor: "rgba(75, 192, 192, 1)",
+                borderWidth: 1,
+                data: [{{#each this}}{{#if @index}}, {{/if}}{{entryPrice}}{{/each}}],
+              },
+              {
+                label: "Median Price",
+                backgroundColor: "rgba(153, 102, 255, 0.6)",
+                borderColor: "rgba(153, 102, 255, 1)",
+                borderWidth: 1,
+                data: [{{#each this}}{{#if @index}}, {{/if}}{{medianPrice}}{{/each}}],
+              },
+              {
+                label: "Top Price",
+                backgroundColor: "rgba(255, 159, 64, 0.6)",
+                borderColor: "rgba(255, 159, 64, 1)",
+                borderWidth: 1,
+                data: [{{#each this}}{{#if @index}}, {{/if}}{{topPrice}}{{/each}}],
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              legend: {
+                position: 'top',
+              },
+              title: {
+                display: true,
+                text: '{{@key}} Price Positioning by Brand',
+              }
+            },
+            scales: {
+              x: {
+                stacked: true,
+                title: {
+                  display: true,
+                  text: 'Brands'
+                }
+              },
+              y: {
+                stacked: true,
+                title: {
+                  display: true,
+            
+                  text: 'Prices ({{#each this}}{{#if @first}}{{currency}}{{/if}}{{/each}})',
+
+                },
+                beginAtZero: true,
+                suggestedMax: 1.2 * Math.max(
+                  ...[{{#each this}}{{#if @index}}, {{/if}}{{entryPrice}}{{/each}}].map((val, index) => 
+                    val + [{{#each this}}{{#if @index}}, {{/if}}{{medianPrice}}{{/each}}][index] + 
+                    [{{#each this}}{{#if @index}}, {{/if}}{{topPrice}}{{/each}}][index]
+                  )
+                ),
+                ticks: {
+                  stepSize: 1000, 
+                }
+              }
+            }
+          }
+        });
+        {{/each}}
+      </script>
+      
+  </section>
+
+  {{!-- Category Mix Analysis by Brand --}}
+
+  <section id="category-mix-analysis" class="page">
+      <div class="card">
+          <div class="card-header d-flex justify-content-between">
+              <div class="header-title">
+                    {{{heading "h2" id="title16" class="text-left" content="Category Mix Analysis by Brand" }}}
+              </div>
+          </div>
+          <div class="card-body">
+              <h2 class="text-left">
+                  Tracking changes in product category focus across brands over the past season.
+              </h2>
+              <br></br>
+              <h3 class="text-left"><em>This section provides a detailed analysis of how brands have shifted their focus across product categories over the past season. It displays a table showing each brand’s involvement in specific categories, indicating whether the categories are consistent, new, or removed.</em></h3>
+              <p style="text-align: center; font-size: 14px;">
+              <br><br>
+              <span class="icon" style="color: green;">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 19L3.5 13.5L5.5 11.5L9 15L18.5 5.5L20.5 7.5L9 19Z"/></svg>
+              </span> Consistent categories,
+              <span class="icon" style="color: blue;">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 13H13V19H11V13H5V11H11V5H13V11H19V13Z"/></svg>
+              </span> New categories,
+              <span class="icon" style="color: red;">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 13H5V11H19V13Z"/></svg>
+              </span> Removed categories.
+            </p>
+            <br></br>
+              <div class="table-responsive">
+                  <table id="categoryTable" class="table table-bordered table-light">
+                      <thead>
+                          <tr>
+                              <th>Brand</th>
+                              {{#each categoryMix.categoryArray}}
+                              <th>{{this}}</th>
+                              {{/each}}
+                          </tr>
+                      </thead>
+                      <tbody>
+                          {{#each categoryMix.categoryMix}}
+                          <tr>
+                              <td>{{brand}}</td>
+                              {{#each ../categoryMix.categoryArray}}
+                              <td>
+                                  {{#with (lookup ../categories @index)}}
+                                      {{#if status}}
+                                          <span class="icon" style="color: {{getCategoryStatus status}}">{{{getCategoryStatus status}}}</span>
+                                      {{else}}
+                                          <span class="icon" style="color: grey;">N/A</span>
+                                      {{/if}}
+                                  {{/with}}
+                              </td>
+                              {{/each}}
+                          </tr>
+                          {{/each}}
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+      </div>
+  </section>
+
+
+{{!-- Brand Price Range Comparison --}}
+
+  {{!-- <section id="brand-price-range" class="new-page">
+    {{{heading "h2" id="title17" class="text-left" style="margin-left:40px" content="Brand Price Range Comparison" }}}
+    <h3 class="text-left"style="margin-left:40px">Visualizing Price Ranges Across Major Categories and Competitors in Top-Performing Countries</h3>
+    <br></br>
+    <h4 class="text-left"style="margin-left:40px"><em>This section compares brand price ranges across categories and countries, using scatter plots to show price range vs. SKU count. Circle size reflects SKU count, and color represents the brand</em></h4>
+    {{#each priceRangeData as |countryData country|}}
+      <div class="country-title" style="margin-left:40px">Price Range vs. SKU - {{country}}</div>
+
+      {{#each countryData as |categoryData category|}}
+        <div class="category-title"style="margin-left:40px">Category: {{category}}</div>
+        <div id="chart-container-{{country}}-{{category}}" class="chart-container">
+          <div id="chart-{{country}}-{{category}}"></div>
+        </div>
+
+        <script>
+          (function() {
+            const margin = { top: 80, right: 40, bottom: 70, left: 40 }; // Increased top margin
+            const width = 800 - margin.left - margin.right;
+            const height = 900 - margin.top - margin.bottom; // Increased height
+
+            const data = [
+              {{#each categoryData as |brandData brand|}}
+                {{#each brandData as |entry|}}
+                  {
+                    country: "{{country}}",
+                    category: "{{category}}",
+                    brand: "{{brand}}",
+                    range: "{{entry.range}}",
+                    totalSku: {{entry.totalSku}},
+                  },
+                {{/each}}
+              {{/each}}
+            ];
+
+            const svg = d3
+              .select("#chart-{{country}}-{{category}}")
+              .append("svg")
+              .attr("width", width + margin.left + margin.right)
+              .attr("height", height + margin.top + margin.bottom + 50) // Extra space
+              .append("g")
+              .attr("transform", `translate(${margin.left},${margin.top + 50})`); // Moves chart lower
+
+            const xScale = d3
+              .scaleBand()
+              .domain(data.map(d => d.brand))
+              .range([0, width])
+              .padding(0.05);
+            
+            const yScale = d3
+              .scalePoint()
+              .domain([...new Set(data.map(d => d.range))])
+              .range([height, 0])
+              .padding(0.1);
+
+            const maxSku = d3.max(data, d => d.totalSku);
+            const sizeScale = d3.scaleSqrt().domain([0, maxSku]).range([7, 20]);
+
+            const colorScale = d3.scaleOrdinal(d3.schemeTableau10).domain([...new Set(data.map(d => d.brand))]);
+
+            const tooltip = d3.select("#tooltip");
+
+            svg
+              .selectAll(".grid-line")
+              .data(data)
+              .enter()
+              .append("line")
+              .attr("class", "grid-line")
+              .attr("x1", d => xScale(d.brand) + xScale.bandwidth() / 2)
+              .attr("x2", d => xScale(d.brand) + xScale.bandwidth() / 2)
+              .attr("y1", 0)
+              .attr("y2", height)
+              .attr("stroke", "#ccc")
+              .attr("stroke-width", 0.5)
+              .attr("stroke-dasharray", "2,2");
+
+            svg
+              .selectAll("circle")
+              .data(data)
+              .enter()
+              .append("circle")
+              .attr("cx", d => xScale(d.brand) + xScale.bandwidth() / 2)
+              .attr("cy", d => yScale(d.range))
+              .attr("r", d => sizeScale(d.totalSku))
+              .attr("fill", d => colorScale(d.brand))
+              .attr("opacity", 0.7)
+              .on("mouseover", (event, d) => {
+                tooltip
+                  .style("visibility", "visible")
+                  .style("top", `${event.pageY - 40}px`)
+                  .style("left", `${event.pageX + 10}px`)
+                  .html(
+                    `<strong>Brand:</strong> ${d.brand}<br>
+                    <strong>Range:</strong> ${d.range}<br>
+                    <strong>Total SKU:</strong> ${d.totalSku}`
+                  );
+              })
+              .on("mousemove", event => {
+                tooltip
+                  .style("top", `${event.pageY - 40}px`)
+                  .style("left", `${event.pageX + 10}px`);
+              })
+              .on("mouseout", () => {
+                tooltip.style("visibility", "hidden");
+              });
+
+            svg
+              .selectAll("text.sku-label")
+              .data(data)
+              .enter()
+              .append("text")
+              .attr("x", d => xScale(d.brand) + xScale.bandwidth() / 2)
+              .attr("y", d => yScale(d.range) - sizeScale(d.totalSku) - 5)
+              .attr("text-anchor", "middle")
+              .attr("font-size", "12px")
+              .attr("fill", "#000")
+              .text(d => d.totalSku);
+
+            const yAxis = d3.axisLeft(yScale).tickSize(6);
+            svg.append("g").attr("class", "y-axis").call(yAxis);
+
+            const xAxis = d3.axisBottom(xScale).tickSize(6);
+            svg.append("g")
+              .attr("class", "x-axis")
+              .attr("transform", `translate(0, ${height})`)
+              .call(xAxis);
+
+            svg.selectAll(".x-axis text")
+              .style("text-anchor", "middle")
+              .attr("transform", "rotate(-45)")
+              .attr("dx", "-0.8em")
+              .attr("dy", "1.2em");
+
+          })();
+        </script>
+
+      {{/each}}
+    {{/each}}
+  </section> --}}
+
+
+<section id="brand-price-range" class="new-page">
+    {{{heading "h2" id="title17" class="text-left" style="margin-left:40px" content="Brand Price Range Comparison" }}}
+    <h3 class="text-left" style="margin-left:40px">
+        Visualizing Price Ranges Across Major Categories and Competitors in Top-Performing Countries
+    </h3>
+    <h4 class="text-left" style="margin-left:40px">
+        <em>This section compares brand price ranges across categories and countries, using scatter plots to show price range vs. SKU count. 
+        Circle size reflects SKU count, and color represents the brand.</em>
+    </h4>
+    
+    {{#each priceRangeData as |countryData country|}}
+      <div class="country-title" style="margin-left:40px">Price Range vs. SKU - {{country}}</div>
+    
+      {{#each countryData as |categoryData category|}}
+        <div class="category-title" style="margin-left:40px">Category: {{category}}</div>
+        <div id="chart-container-{{country}}-{{category}}" class="chart-container" style="height: 400px;">
+          <!-- Clear any existing content before adding a new chart -->
+          <div id="chart-{{country}}-{{category}}" class="svg-container"></div>
+        </div>
+
+        <script>
+          (function() {
+  const margin = { top: 80, right: 40, bottom: 70, left: 60 };
+  const width = 800 - margin.left - margin.right;
+  const height = 900 - margin.top - margin.bottom;
+
+  const data = [
+    {{#each categoryData as |brandData brand|}}
+      {{#each brandData as |entry|}}
+        {
+          country: "{{country}}",
+          category: "{{category}}",
+          brand: "{{brand}}",
+          range: "{{entry.range}}",
+          totalSku: {{entry.totalSku}}
+        },
+      {{/each}}
+    {{/each}}
+  ];
+
+  // Define price ranges as categories
+  const priceRanges = [...new Set(data.map(d => d.range))].sort();
+
+  // Ensure the D3 SVG is appended only to the right container
+  const chartContainer = d3.select(`#chart-container-{{country}}-{{category}}`);
+  
+  // Remove all previous content in this chart container
+  chartContainer.selectAll("*").remove();
+
+  // Append a new SVG to the chart container
+  const svg = chartContainer
+    .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+    .attr("transform", `translate(${margin.left},${margin.top})`);
+
+  const xScale = d3.scaleBand()
+    .domain(data.map(d => d.brand))
+    .range([0, width])
+    .padding(0.05);
+
+  const yScale = d3.scaleBand()
+    .domain(priceRanges)
+    .range([height, 0])
+    .padding(0.2);
+
+  const maxSku = d3.max(data, d => d.totalSku);
+  const sizeScale = d3.scaleSqrt().domain([0, maxSku]).range([5, 25]);
+
+  const colorScale = d3.scaleOrdinal(d3.schemeTableau10)
+    .domain([...new Set(data.map(d => d.brand))]);
+
+  const tooltip = d3.select("#tooltip");
+
+  // Add circles (bubbles) for each data point
+  svg.selectAll("circle")
+    .data(data)
+    .enter()
+    .append("circle")
+    .attr("cx", d => xScale(d.brand) + xScale.bandwidth() / 2)
+    .attr("cy", d => yScale(d.range) + yScale.bandwidth() / 2)
+    .attr("r", d => sizeScale(d.totalSku))
+    .attr("fill", d => colorScale(d.brand))
+    .attr("opacity", 0.7)
+    .on("mouseover", (event, d) => {
+      tooltip.style("visibility", "visible")
+        .style("top", `${event.pageY - 40}px`)
+        .style("left", `${event.pageX + 10}px`)
+        .html(
+          `<strong>Brand:</strong> ${d.brand}<br>
+           <strong>Range:</strong> ${d.range}<br>
+           <strong>Total SKU:</strong> ${d.totalSku}`
+        );
+    })
+    .on("mousemove", event => {
+      tooltip.style("top", `${event.pageY - 40}px`)
+        .style("left", `${event.pageX + 10}px`);
+    })
+    .on("mouseout", () => {
+      tooltip.style("visibility", "hidden");
+    });
+
+  // Add Y-axis
+  svg.append("g").attr("class", "y-axis").call(d3.axisLeft(yScale));
+
+  // Add X-axis and gridlines
+  const xAxis = svg.append("g")
+    .attr("class", "x-axis")
+    .attr("transform", `translate(0, ${height})`)
+    .call(d3.axisBottom(xScale));
+
+  // Rotate X-axis labels
+  xAxis.selectAll("text")
+    .style("text-anchor", "middle")
+    .attr("transform", "rotate(-45)")
+    .attr("dx", "-0.8em")
+    .attr("dy", "1.2em");
+
+  // Add gridlines for X-axis
+  svg.selectAll(".x-grid")
+    .data(xScale.domain())
+    .enter()
+    .append("line")
+    .attr("class", "x-grid")
+    .attr("x1", d => xScale(d) + xScale.bandwidth() / 2)
+    .attr("x2", d => xScale(d) + xScale.bandwidth() / 2)
+    .attr("y1", 0)
+    .attr("y2", height)
+    .style("stroke", "#ddd")
+    .style("stroke-width", "1px")
+    .style("stroke-dasharray", "4");
+
+  // Add SKU number labels above the circles
+  svg.selectAll(".sku-label")
+    .data(data)
+    .enter()
+    .append("text")
+    .attr("x", d => xScale(d.brand) + xScale.bandwidth() / 2)
+    .attr("y", d => yScale(d.range) + 10)
+    .attr("text-anchor", "middle")
+    .attr("font-size", "12px")
+    .attr("fill", "#000")
+    .text(d => d.totalSku);
+})();
+
+        </script>
+      {{/each}}
+    {{/each}}
+</section>
+
+
+
+{{!-- Shop Price Range Comparison --}}
+
+
+<section class="new-page">
+  {{{heading "h2" id="title18" class="text-left" style="margin-left:40px" content="Shop Price Range Comparison" }}}
+  <h3 class="text-left" style="margin-left:40px">
+    Visualizing Price Ranges Across Major Categories and Shops in Top-Performing Countries
+  </h3>
+  <br>
+  <h4 class="text-left" style="margin-left:40px">
+    <em>This section compares shop price ranges across categories and countries, with scatter plots showing price range vs. SKU count. Circle size indicates SKU count, and color represents the shop</em>
+  </h4>
+  
+  {{#each priceRangeDatabyShop as |shopDataByCountry country|}}
+    <div class="country-title" style="margin-left:40px">Price Range vs. SKU - {{country}}</div>
+    
+    {{#each shopDataByCountry as |categoryDataByShop category|}}
+      <div class="category-title" style="margin-left:40px">Category: {{category}}</div>
+      <div id="chart-container-{{country}}-{{category}}" class="chart-container">
+        <div id="shop-chart-{{country}}-{{category}}"></div>
+      </div>
+
+
+    <script>
+      (function() {
+        const margin = { top: 80, right: 40, bottom: 70, left: 60 };
+        const width = 800 - margin.left - margin.right;
+        const height = 900 - margin.top - margin.bottom;
+        
+        const data = [
+          {{#each categoryDataByShop as |shopDetails shop|}}
+            {{#each shopDetails as |priceDetails|}}
+              {
+                country: "{{country}}",
+                category: "{{category}}",
+                shop: "{{shop}}",
+                range: "{{priceDetails.range}}",
+                totalSku: {{priceDetails.totalSku}}
+              },
+            {{/each}}
+          {{/each}}
+        ];
+
+        // Define price ranges as categories
+        const priceRanges = [...new Set(data.map(d => d.range))].sort();
+
+        // Create SVG container
+        // const svg = d3
+        //   .select("#shop-chart-{{country}}-{{category}}")
+        //   .append("svg")
+        //   .attr("width", width + margin.left + margin.right)
+        //   .attr("height", height + margin.top + margin.bottom)
+        //   .append("g")
+        //   .attr("transform", `translate(${margin.left},${margin.top})`);
+
+const svg = d3
+  .select(`#shop-chart-{{country}}-{{category}}`)
+  .selectAll("svg")  // Only append new SVG elements if one doesn't exist yet
+  .data([data])  // Bind data to the selected element
+  .enter()
+  .append("svg")  // Append new SVG if none exists
+  .attr("width", width + margin.left + margin.right)
+  .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+  .attr("transform", `translate(${margin.left},${margin.top})`);
+
+
+        // X and Y scales (use scaleBand for Y-axis to keep categorical ranges)
+        const xScale = d3.scaleBand()
+          .domain(data.map(d => d.shop))
+          .range([0, width])
+          .padding(0.05);
+
+        const yScale = d3.scaleBand()  // Use scaleBand for categorical ranges
+          .domain(priceRanges)
+          .range([height, 0])
+          .padding(0.2);
+
+        const maxSku = d3.max(data, d => d.totalSku);
+        const sizeScale = d3.scaleSqrt().domain([0, maxSku]).range([5, 25]);
+
+        const colorScale = d3.scaleOrdinal(d3.schemeTableau10)
+          .domain([...new Set(data.map(d => d.shop))]);
+
+        // Tooltip
+        const tooltip = d3.select("#tooltip");
+
+        // Add circles for each data point (representing bubbles)
+        data.forEach(d => {
+          svg.append("circle")
+            .attr("cx", xScale(d.shop) + xScale.bandwidth() / 2)
+            .attr("cy", yScale(d.range) + yScale.bandwidth() / 2)
+            .attr("r", sizeScale(d.totalSku))
+            .attr("fill", colorScale(d.shop))
+            .attr("opacity", 0.7)
+            .on("mouseover", (event) => {
+              tooltip.style("visibility", "visible")
+                .style("top", `${event.pageY - 40}px`)
+                .style("left", `${event.pageX + 10}px`)
+                .html(
+                  `<strong>Shop:</strong> ${d.shop}<br>
+                  <strong>Range:</strong> ${d.range}<br>
+                  <strong>Total SKU:</strong> ${d.totalSku}`
+                );
+            })
+            .on("mousemove", (event) => {
+              tooltip.style("top", `${event.pageY - 40}px`)
+                .style("left", `${event.pageX + 10}px`);
+            })
+            .on("mouseout", () => {
+              tooltip.style("visibility", "hidden");
+            });
+        });
+
+        // Add Y-axis
+        svg.append("g").attr("class", "y-axis").call(d3.axisLeft(yScale));
+
+        // Add X-axis and gridlines
+        const xAxis = svg.append("g")
+          .attr("class", "x-axis")
+          .attr("transform", `translate(0, ${height})`)
+          .call(d3.axisBottom(xScale));
+
+        // Rotate the X-axis labels
+        xAxis.selectAll("text")
+          .style("text-anchor", "middle")
+          .attr("transform", "rotate(-45)")
+          .attr("dx", "-0.8em")
+          .attr("dy", "1.2em");
+
+        // Add gridlines for X-axis
+        xScale.domain().forEach(d => {
+          svg.append("line")
+            .attr("class", "x-grid")
+            .attr("x1", xScale(d) + xScale.bandwidth() / 2)
+            .attr("x2", xScale(d) + xScale.bandwidth() / 2)
+            .attr("y1", 0)
+            .attr("y2", height)
+            .style("stroke", "#ddd")
+            .style("stroke-width", "1px")
+            .style("stroke-dasharray", "4");
+        });
+
+        // Add SKU number labels above the bubbles
+        data.forEach(d => {
+          svg.append("text")
+            .attr("x", xScale(d.shop) + xScale.bandwidth() / 2)
+            .attr("y", yScale(d.range) + 10)
+            .attr("text-anchor", "middle")
+            .attr("font-size", "12px")
+            .attr("fill", "#000")
+            .text(d.totalSku);
+        });
+
+      })();
+    </script>
+
+    {{/each}}
+  {{/each}}
+</section>
+
+{{!-- <section id="shop-price-range" class="new-page">
+
+  <h3 class="text-left"style="margin-left:40px">Visualizing Price Ranges Across Major Categories and Shops in Top-Performing Countries</h3>
+   <br></br>
+   <h4 class="text-left"style="margin-left:40px"><em>This section compares shop price ranges across categories and countries, with scatter plots showing price range vs. SKU count. Circle size indicates SKU count, and color represents the shop</em></h4>
+   <br></br>
+  {{#each priceRangeDatabyShop as |countryData country|}}
+    <div class="country-title" style="margin-left:40px">Price Range vs. SKU - {{country}}</div>
+    
+    {{#each countryData as |categoryData category|}}
+      <div class="category-title" style="margin-left:40px">Category: {{category}}</div>
+      <div id="chart-container-{{country}}-{{category}}" class="chart-container">
+        <div id="shopchart-{{country}}-{{category}}"></div>
+      </div>
+
+      <script>
+        (function() {
+          
+          const margin = { top: 40, right: 200, bottom: 70, left: 40 }; // Increased top margin
+          const width = 1000 - margin.left - margin.right;
+          const height = 900 - margin.top - margin.bottom; // Increased height
+
+          const data = [
+            {{#each categoryData as |shopData shop|}}
+              {{#each shopData as |entry|}}
+                {
+                  country: "{{country}}",
+                  category: "{{category}}",
+                  shop: "{{shop}}",
+                  range: "{{entry.range}}",
+                  totalSku: {{entry.totalSku}},
+                },
+              {{/each}}
+            {{/each}}
+          ];
+
+          const svg = d3
+            .select("#shopchart-{{country}}-{{category}}")
+            .append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom + 50) // Extra space
+            .append("g")
+            .attr("transform", `translate(${margin.left},${margin.top + 50})`); // Moves chart lower
+
+//  const svg = d3
+//         .select("#chart-{{country}}-{{category}}")
+//         .selectAll("svg")  // Only append new SVG elements if one doesn't exist yet
+//         .data([data])
+//         .enter()
+//         .append("svg")
+//         .attr("width", width + margin.left + margin.right)
+//         .attr("height", height + margin.top + margin.bottom)
+//         .append("g")
+//         .attr("transform", `translate(${margin.left},${margin.top})`);
+
+
+          const xScale = d3
+            .scaleBand()
+            .domain(data.map(d => d.shop))
+            .range([0, width])
+            .padding(0.05);
+
+          const yScale = d3
+            .scalePoint()
+            .domain([...new Set(data.map(d => d.range))])
+            .range([height, 0])
+            .padding(0.1);
+
+          const maxSku = d3.max(data, d => d.totalSku);
+          const sizeScale = d3.scaleSqrt().domain([0, maxSku]).range([7, 20]);
+
+          const colorScale = d3.scaleOrdinal(d3.schemeTableau10).domain([...new Set(data.map(d => d.shop))]);
+
+          const tooltip = d3.select("#tooltip");
+
+          svg
+            .selectAll(".grid-line")
+            .data(data)
+            .enter()
+            .append("line")
+            .attr("class", "grid-line")
+            .attr("x1", d => xScale(d.shop) + xScale.bandwidth() / 2)
+            .attr("x2", d => xScale(d.shop) + xScale.bandwidth() / 2)
+            .attr("y1", 0)
+            .attr("y2", height)
+            .attr("stroke", "#ccc")
+            .attr("stroke-width", 0.5)
+            .attr("stroke-dasharray", "2,2");
+
+          svg
+            .selectAll("circle")
+            .data(data)
+            .enter()
+            .append("circle")
+            .attr("cx", d => xScale(d.shop) + xScale.bandwidth() / 2)
+            .attr("cy", d => yScale(d.range))
+            .attr("r", d => sizeScale(d.totalSku))
+            .attr("fill", d => colorScale(d.shop))
+            .attr("opacity", 0.7)
+            .on("mouseover", (event, d) => {
+              tooltip
+                .style("visibility", "visible")
+                .style("top", `${event.pageY - 40}px`)
+                .style("left", `${event.pageX + 10}px`)
+                .html(
+                  `<strong>Shop:</strong> ${d.shop}<br>
+                   <strong>Range:</strong> ${d.range}<br>
+                   <strong>Total SKU:</strong> ${d.totalSku}`
+                );
+            })
+            .on("mousemove", event => {
+              tooltip
+                .style("top", `${event.pageY - 40}px`)
+                .style("left", `${event.pageX + 10}px`);
+            })
+            .on("mouseout", () => {
+              tooltip.style("visibility", "hidden");
+            });
+
+          svg
+            .selectAll("text.sku-label")
+            .data(data)
+            .enter()
+            .append("text")
+            .attr("x", d => xScale(d.shop) + xScale.bandwidth() / 2)
+            .attr("y", d => yScale(d.range) - sizeScale(d.totalSku) - 5)
+            .attr("text-anchor", "middle")
+            .attr("font-size", "12px")
+            .attr("fill", "#000")
+            .text(d => d.totalSku);
+
+          const yAxis = d3.axisLeft(yScale).tickSize(6);
+          svg.append("g").attr("class", "y-axis").call(yAxis);
+
+          const xAxis = d3.axisBottom(xScale).tickSize(6);
+          svg.append("g")
+            .attr("class", "x-axis")
+            .attr("transform", `translate(0, ${height})`)
+            .call(xAxis);
+
+          svg.selectAll(".x-axis text")
+            .style("text-anchor", "middle")
+            .attr("transform", "rotate(-45)")
+            .attr("dx", "-0.8em")
+            .attr("dy", "1.2em");
+
+        })();
+      </script>
+
+    {{/each}}
+  {{/each}}
+</section> --}}
+
+
+
+
+
+
+{{!-- Number of Total SKU  History by Brand --}}
+
+<section id="total-sku-history" class="new-page" >
+  {{{heading "h2" id="title19" class="text-left" style= "margin-left:40px" content="Number of Total SKU History by Brand" }}}
+  <h3 class="text-left"style="margin-left: 40px;">Tracking Changes of SKU Across Top Brands Over Time</h3>
+  <br></br>
+  <h4 class="text-left" style=" margin-left: 40px;"><em>This section visualizes SKU trends over time for top brands using a line chart. Each line represents a brand, with color-coded legends. The x-axis shows dates, and the y-axis shows SKU counts.</em></h4>
+  <div class="chart-container" style="width: 100%; height: 700px !important; margin-top: 80px;">
+    <canvas id="skuHistoryChart" style="width: 100% !important; height: 900px !important;"></canvas>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      setTimeout(() => {  // Prevents JSReport crashes
+        try {
+          const skuHistoryData = [
+            {{#each allSkuHistoryData}}
+              {
+                date: "{{this.date}}",
+                data: {
+                  {{#each this.data}}
+                    "{{@key}}": [
+                      {
+                        x: "{{this.[0].x}}",
+                        y: {{this.[0].y}}
+                      }
+                    ]
+                  {{#unless @last}},{{/unless}}
+                  {{/each}}
+                }
+              }{{#unless @last}},{{/unless}}
+            {{/each}}
+          ];
+
+          const skuDatasets = {};
+          const skuUniqueDates = [];
+
+          skuHistoryData.forEach((entry) => {
+            const date = new Date(entry.date);
+            if (!skuUniqueDates.includes(date.getTime())) {
+              skuUniqueDates.push(date.getTime());
+            }
+
+            Object.entries(entry.data).forEach(([brand, dataArray]) => {
+              if (!skuDatasets[brand]) {
+                const color = getRandomColor();
+                skuDatasets[brand] = {
+                  label: brand,
+                  data: [],
+                  backgroundColor: color, // Legend fill color
+                  borderColor: color, // Line color
+                  borderWidth: 2,
+                  tension: 0.4,
+                  fill: false,
+                };
+              }
+
+              dataArray.forEach((item) => {
+                skuDatasets[brand].data.push({ x: new Date(item.x), y: parseInt(item.y) });
+              });
+            });
+          });
+
+          const skuCtx = document.getElementById("skuHistoryChart").getContext("2d");
+
+          new Chart(skuCtx, {
+            type: "line",
+            data: {
+              datasets: Object.values(skuDatasets),
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false, // Allow custom height
+              plugins: {
+                title: {
+                  display: true,
+                  text: "#SKU - Brand",
+                },
+                legend: {
+                  position: "right",
+                  labels: {
+                    usePointStyle: true,
+                    pointStyle: "rect", // Makes legend a filled rectangle
+                    boxWidth: 20,
+                    borderWidth: 0, // Removes border from legend items
+                  },
+                },
+              },
+              scales: {
+                x: {
+                  type: "time",
+                  time: {
+                    unit: "day",
+                    tooltipFormat: "PP",
+                    stepSize: 1, // Force daily ticks
+                    min: skuUniqueDates[0], // Ensure consistent minimum date
+                    max: skuUniqueDates[skuUniqueDates.length - 1], // Ensure consistent maximum date
+                  },
+                  title: {
+                    display: true,
+                    text: "Date",
+                  },
+                },
+                y: {
+                  title: {
+                    display: true,
+                    text: "#SKU",
+                  },
+                  beginAtZero: false,
+                  ticks: {
+                    suggestedMin: 0,
+                    suggestedMax: Math.max(
+                      ...Object.values(skuDatasets).flatMap((dataset) =>
+                        dataset.data.map((point) => point.y)
+                      )
+                    ) + 5,
+                  },
+                },
+              },
+              elements: {
+                point: {
+                  radius: 0,
+                },
+              },
+              animation: {
+                duration: 0, // Disable animation for immediate updates
+              },
+            },
+          });
+        } catch (error) {
+          console.error("Chart.js Error:", error);
+        }
+      }, 100); // Small delay to prevent JSReport crashes
+    });
+
+    // Function to generate a random color in hexadecimal format
+    function getRandomColor() {
+      const letters = "0123456789ABCDEF";
+      let color = "#";
+      for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
+    }
+  </script>
+</section>
+
+
+{{!-- Percentage of SKU in Promo History by Brand --}}
+
+<section id="sku-promo-history" class="new-page">
+  {{{heading "h2" id="title20" class="text-left" style="margin-left:40px" content="Percentage of SKU in Promo History by Brand" }}}
+  <h3 class="text-left" style="margin-left: 40px;">Tracking Changes of SKU in Promo Across Top Brands Over Time</h3>
+  <br></br>
+  <h4 style="margin-left: 40px;"><em>This section visualizes the percentage of SKUs in promotions over time for top brands using a line chart. Each line represents a brand, with color-coded legends. The x-axis shows dates, and the y-axis represents the percentage of SKUs on promo.</em></h4>
+  <br></br>
+  <div class="chart-container" style="width: 100%; height: 700px !important; margin-top: 80px;">
+    <canvas id="promoHistoryChart" style="width: 100% !important; height: 800px !important;"></canvas>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      setTimeout(() => {  // Prevents JSReport crashes
+        try {
+          const promoHistoryData = [
+            {{#each allPromoSkuHistoryData}}
+              {
+                date: "{{this.date}}",
+                data: {
+                  {{#each this.data}}
+                    "{{@key}}": [
+                      {
+                        x: "{{this.[0].x}}",
+                        y: {{this.[0].y}}
+                      }
+                    ]
+                  {{#unless @last}},{{/unless}}
+                  {{/each}}
+                }
+              }{{#unless @last}},{{/unless}}
+            {{/each}}
+          ];
+
+          const promoDatasets = {};
+          const promoUniqueDates = [];
+
+          promoHistoryData.forEach((entry) => {
+            const date = new Date(entry.date);
+            if (!promoUniqueDates.includes(date.getTime())) {
+              promoUniqueDates.push(date.getTime());
+            }
+
+            Object.entries(entry.data).forEach(([brand, dataArray]) => {
+              if (!promoDatasets[brand]) {
+                const color = getRandomColor();
+                promoDatasets[brand] = {
+                  label: brand,
+                  data: [],
+                  backgroundColor: color, // Legend fill color
+                  borderColor: color, // Line color
+                  borderWidth: 2,
+                  tension: 0.4,
+                  fill: false,
+                };
+              }
+
+              dataArray.forEach((item) => {
+                promoDatasets[brand].data.push({ x: new Date(item.x), y: parseInt(item.y) });
+              });
+            });
+          });
+
+          const promoCtx = document.getElementById("promoHistoryChart").getContext("2d");
+
+          new Chart(promoCtx, {
+            type: "line",
+            data: {
+              datasets: Object.values(promoDatasets),
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false, // Allow custom height
+              plugins: {
+                title: {
+                  display: true,
+                  text: "%SKU Promo - Brand",
+                },
+                legend: {
+                  position: "right",
+                  labels: {
+                    usePointStyle: true,
+                    pointStyle: "rect", // Makes legend a filled rectangle
+                    boxWidth: 20,
+                    borderWidth: 0, // Removes border from legend items
+                  },
+                },
+              },
+              scales: {
+                x: {
+                  type: "time",
+                  time: {
+                    unit: "day",
+                    tooltipFormat: "PP",
+                  },
+                  title: {
+                    display: true,
+                    text: "Date",
+                  },
+                },
+                y: {
+                  title: {
+                    display: true,
+                    text: "%SKU Promo",
+                  },
+                  beginAtZero: false,
+                  ticks: {
+                    suggestedMin: 0,
+                    suggestedMax: Math.max(
+                      ...Object.values(promoDatasets).flatMap((dataset) =>
+                        dataset.data.map((point) => point.y)
+                      )
+                    ) + 5,
+                  },
+                },
+              },
+              elements: {
+                point: {
+                  radius: 0,
+                },
+              },
+              animation: {
+                duration: 0, // Disable animation for immediate updates
+              },
+            },
+          });
+        } catch (error) {
+          console.error("Chart.js Error:", error);
+        }
+      }, 100); // Small delay to prevent JSReport crashes
+    });
+
+    // Function to generate a random color in hexadecimal format
+    function getRandomColor() {
+      const letters = "0123456789ABCDEF";
+      let color = "#";
+      for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
+    }
+  </script>
+</section>
+
+{{!-- Average Sale Price History by Brand--}}
+
+<section id="avg-sale-price-history" class="new-page">
+  {{{heading "h2" id="title21" class="text-left" style= "margin-left:40px" content="Average Sale Price History by Brand" }}}
+  <h3 class="text-left"  style="margin-left: 40px;">Tracking Changes in Average Sale Prices Across Top Brands Over Time</h3>
+   <br></br>
+  <h4 class="text-left"  style="margin-left: 40px;"><em>The section displays a line chart tracking the average sale price history across top brands over time. The chart compares how the average sale prices of different brands have changed over a specific period. Each brand is represented by a unique colored line, with the x-axis showing the dates and the y-axis showing the average sale price for each brand. The chart provides a visual overview of pricing trends, making it easy to see how brands' prices fluctuate and how they compare against each other over time.</em></h4>
+  <br></br>
+  <div class="chart-container" style="width: 100%; height: 800px;">
+    <canvas id="avgSalePriceHistoryChart"></canvas>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const avgSalePriceHistoryData = [
+        {{#each allAvgSalePriceHistoryData}}
+          {
+            date: "{{this.date}}",
+            data: {
+              {{#each this.data}}
+                "{{@key}}": [
+                  {
+                    x: "{{this.[0].x}}",
+                    y: {{this.[0].y}}
+                  }
+                ]
+              {{#unless @last}},{{/unless}}
+              {{/each}}
+            }
+          }{{#unless @last}},{{/unless}}
+        {{/each}}
+      ];
+
+      const avgSalePriceDatasets = {};
+      const avgSalePriceUniqueDates = [];
+
+      avgSalePriceHistoryData.forEach((entry) => {
+        const date = new Date(entry.date);
+        if (!avgSalePriceUniqueDates.includes(date.getTime())) {
+          avgSalePriceUniqueDates.push(date.getTime());
+        }
+
+        Object.entries(entry.data).forEach(([brand, dataArray]) => {
+          if (!avgSalePriceDatasets[brand]) {
+            const color = getRandomColor();
+            avgSalePriceDatasets[brand] = {
+              label: brand,
+              data: [],
+              backgroundColor: color, // Used for the legend fill
+              borderColor: color, // Used for the line color
+              borderWidth: 2,
+              tension: 0.4,
+              fill: false,
+            };
+          }
+
+          dataArray.forEach((item) => {
+            avgSalePriceDatasets[brand].data.push({ x: new Date(item.x), y: parseFloat(item.y) });
+          });
+        });
+      });
+
+      const avgSalePriceCtx = document
+        .getElementById("avgSalePriceHistoryChart")
+        .getContext("2d");
+
+      new Chart(avgSalePriceCtx, {
+        type: "line",
+        data: {
+          datasets: Object.values(avgSalePriceDatasets),
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            title: {
+              display: true,
+              text: "Average Sale Price - Brand",
+            },
+            legend: {
+              position: "right",
+              labels: {
+                usePointStyle: true, // Enables rectangle legend
+                pointStyle: "rect",  // Makes legend icons solid rectangles
+                boxWidth: 20,        // Adjust size of legend color box
+                borderWidth: 0,      // Removes the border
+              },
+            },
+          },
+          scales: {
+            x: {
+              type: "time",
+              time: {
+                unit: "day",
+                tooltipFormat: "PP",
+              },
+              title: {
+                display: true,
+                text: "Date",
+              },
+            },
+            y: {
+              title: {
+                display: true,
+                text: "Average Sale Price",
+              },
+              beginAtZero: false,
+              ticks: {
+                suggestedMin: 0,
+                suggestedMax: Math.max(
+                  ...Object.values(avgSalePriceDatasets).flatMap((dataset) =>
+                    dataset.data.map((point) => point.y)
+                  )
+                ) + 100,
+              },
+            },
+          },
+          elements: {
+            point: {
+              radius: 0,
+            },
+          },
+          animation: {
+            duration: 0, // Disable animation for immediate updates
+          },
+        },
+      });
+    });
+
+    // Function to generate a random color in hexadecimal format
+    function getRandomColor() {
+      const letters = "0123456789ABCDEF";
+      let color = "#";
+      for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
+    }
+  </script>
+</section>
+
+
+
+{{!-- Average Discount History by Brand --}}
+
+<section id="avg-discount-history" class="new-page">
+    {{{heading "h2" id="title22" class="text-left" style= "margin-left:40px" content="Average Discount History by Brand" }}}
+  <h3 class="text-left"  style="margin-left: 40px;">Tracking Changes in Average Discounts Across Top Brands Over Time</h3>
+  <br></br>
+  <h4 class="text-left"  style="margin-left: 40px;"><em>This section displays a line chart tracking the average discount history across top brands over time. The chart shows how the average discount percentage for each brand has changed over a specific period. Each brand is represented by a unique colored line, with the x-axis showing the dates and the y-axis showing the average discount percentage for each brand. This allows for easy comparison of how discounts evolve across brands, giving insights into discount strategies over time.</em></h4>
+  <br></br>
+  <div class="chart-container" style="width: 100%; height: 800px !important;">
+    <canvas id="avgDiscountHistoryChart" style="width: 100% !important; height: 800px !important;"></canvas>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      setTimeout(() => {  // Delays execution to prevent JSReport crashes
+        try {
+          const avgDiscountHistoryData = [
+            {{#each allAvgDiscountHistoryData}}
+              {
+                date: "{{this.date}}",
+                data: {
+                  {{#each this.data}}
+                    "{{@key}}": [
+                      {
+                        x: "{{this.[0].x}}",
+                        y: {{this.[0].y}}
+                      }
+                    ]
+                  {{#unless @last}},{{/unless}}
+                  {{/each}}
+                }
+              }{{#unless @last}},{{/unless}}
+            {{/each}}
+          ];
+
+          const avgDiscountDatasets = {};
+          avgDiscountHistoryData.forEach((entry) => {
+            Object.entries(entry.data).forEach(([brand, dataArray]) => {
+              if (!avgDiscountDatasets[brand]) {
+                const color = getRandomColor();
+                avgDiscountDatasets[brand] = {
+                  label: brand,
+                  data: [],
+                  backgroundColor: color, // Legend filled color
+                  borderColor: color, // Line color
+                  borderWidth: 2,
+                  tension: 0.4,
+                  fill: false,
+                };
+              }
+              dataArray.forEach((item) => {
+                avgDiscountDatasets[brand].data.push({ x: new Date(item.x), y: parseFloat(item.y) });
+              });
+            });
+          });
+
+          const avgDiscountCtx = document
+            .getElementById("avgDiscountHistoryChart")
+            .getContext("2d");
+
+          new Chart(avgDiscountCtx, {
+            type: "line",
+            data: {
+              datasets: Object.values(avgDiscountDatasets),
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false, // Allow custom height
+              plugins: {
+                title: {
+                  display: true,
+                  text: "Average Discount - Brand",
+                },
+                legend: {
+                  position: "right",
+                  labels: {
+                    usePointStyle: true,
+                    pointStyle: "rect", // Makes legend a filled rectangle
+                    boxWidth: 20,
+                    borderWidth: 0, // Removes legend border
+                  },
+                },
+              },
+              scales: {
+                x: {
+                  type: "time",
+                  time: {
+                    unit: "day",
+                    tooltipFormat: "PP",
+                  },
+                  title: {
+                    display: true,
+                    text: "Date",
+                  },
+                },
+                y: {
+                  title: {
+                    display: true,
+                    text: "Average Discount (%)",
+                  },
+                  beginAtZero: true,
+                  ticks: {
+                    suggestedMin: 0,
+                    suggestedMax: Math.max(
+                      ...Object.values(avgDiscountDatasets).flatMap((dataset) =>
+                        dataset.data.map((point) => point.y)
+                      )
+                    ) + 5,
+                  },
+                },
+              },
+              elements: {
+                point: {
+                  radius: 0,
+                },
+              },
+              animation: {
+                duration: 0, // Disable animation for immediate updates
+              },
+            },
+          });
+        } catch (error) {
+          console.error("Chart.js Error:", error);
+        }
+      }, 100); // Small delay to prevent JSReport crashes
+    });
+
+    function getRandomColor() {
+      const letters = "0123456789ABCDEF";
+      let color = "#";
+      for (let i = 6; i > 0; --i) color += letters[Math.floor(Math.random() * 16)];
+      return color;
+    }
+  </script>
+</section>
+
+
+{{!-- Assortment and price positioning analysis --}}
+<section id="assortment-price-analysis" style="page-break-before: always;">
+  {{{heading "h2" id="title23" class="text-left" style= "margin-left:40px" content="Assortment and price positioning analysis" }}}
+  <h3 class="text-left"  style="margin-left: 40px;">Visualizing Assortment and Price Distribution Across Different Genders and Countries"</h3>
+   <br></br>
+   <h4 class="text-left"  style="margin-left: 40px;"><em>This section displays bubble charts for assortment and price positioning by country. The charts show the relationship between SKU count and average full price, with bubbles color-coded by gender (e.g., women, men). The chart helps compare pricing strategies across countries and product categories.</em></h4>
+    <br></br>
+    {{#each assortmentPricePositioningData}}
+      
+        <div  class="price-chart-container ">
+            
+            <canvas id="assortmentPricechart_{{@key}}"></canvas>
+        </div>
+        <h3 style="margin-left:40px">Country: {{@key}}</h3>
+        
+
+        <script>
+            (function() {
+                const ctx = document.getElementById("assortmentPricechart_{{@key}}").getContext("2d");
+
+                const data = [
+                    {{#each this}}
+                    {
+                        gender: "{{gender}}",
+                        sku: {{sku}},
+                        avgPrice: {{avgPrice}},
+                        shop: "{{shop}}"
+                    },
+                    {{/each}}
+                ];
+
+                const genderColors = {
+                    "women": "blue",
+                    "men": "orange",
+                    "boys": "green",
+                    "girls": "red",
+                    "baby": "purple",
+                    "pet": "brown"
+                };
+
+                const genderData = {};
+                let maxAvgPrice = 0;
+                let minAvgPrice = Infinity;
+                let maxSKU = 0;
+
+                data.forEach(entry => {
+                    const gender = entry.gender;
+                    maxAvgPrice = Math.max(maxAvgPrice, entry.avgPrice);
+                    minAvgPrice = Math.min(minAvgPrice, entry.avgPrice);
+                    maxSKU = Math.max(maxSKU, entry.sku);
+
+                    if (!genderData[gender]) {
+                        genderData[gender] = {
+                            label: gender,
+                            backgroundColor: genderColors[gender] || "gray",
+                            borderColor: "black",
+                            borderWidth: 1,
+                            data: []
+                        };
+                    }
+
+                    genderData[gender].data.push({
+                        x: entry.sku,
+                        y: entry.avgPrice,
+                        r: 7,  
+                        shop: entry.shop
+                    });
+                });
+
+                const datasets = Object.values(genderData);
+
+                const priceRange = maxAvgPrice - minAvgPrice;
+                const priceStepSize = Math.ceil(priceRange / 800);
+
+                const skuStepSize = Math.ceil(maxSKU / 1000);
+
+                new Chart(ctx, {
+                    type: "bubble",
+                    data: {
+                        datasets: datasets
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            x: {
+                                title: { display: true, text: "SKU Count" },
+                                min: -500,
+                                type: "linear",
+                                position: "bottom",
+                                
+                            },
+                            y: {
+                                title: { display: true, text: "Average Full Price" },
+                                min: 0,
+                                suggestedMax: maxAvgPrice * 1.2,
+                                ticks: {
+                                    stepSize: priceStepSize
+                                }
+                            }
+                        },
+                        plugins: {
+                            legend: { display: true },
+                            tooltip: { enabled: true },
+                            datalabels: {
+                                align: 'right',
+                                anchor: 'bottom',
+                                color: 'black',
+                                font: {
+                                    size: 10
+                                },
+                                offset: 10,
+                                formatter: (value) => value.shop
+                            }
+                        }
+                    },
+                    plugins: [ChartDataLabels]
+                }).update();
+            })();
+        </script>
+    {{/each}}
+</section>
+
+{{!-- Promo and Brand Ranking Analysis for Shops --}}
+
+<section id="promo-ranking-shops" class="new-page">
+
+	<div id="page2" class="page">
+			<div class="card">
+				<div class="card-header d-flex justify-content-between">
+					<div class="header-title">
+              {{{heading "h2" id="title24" class="card-title text-left"  content="Promo and Brand Ranking Analysis for Shops" }}}
+					</div>
+				</div>
+				<div class="card-body">
+          <h4><em>The Promo and Brand Ranking Analysis for Shops section evaluates brand and promotional SKU performance across different shops. It provides insights into SKU rankings, total promotional SKUs, and discount distributions, segmented by country and shop, to highlight pricing strategies and competitive positioning.</em></h4>
+				  <br></br>
+					{{#each promoRankingData}}
+					<div class="table-responsive">
+						<h2 class= "text-left country-section" >Country: {{@key}}</h2>
+						<br></br>
+            {{#each this}}
+							<div class="category-section ">
+                
+								<h2 class="text-left">Shop: {{Shop}} </h2>
+                <br></br>
+								<table id="datatable" class="table table-bordered table-light">
+									<thead>
+										<tr>
+											<th>Brand</th>
+											<th>Total SKUs in Shop</th>
+											<th>Ranking by SKU</th>
+											<th>Total Promo SKUs</th>
+											<th>Full Price</th>
+											<th>Discount 0-20%</th>
+											<th>Discount 20-50%</th>
+											<th>Over 50% Discount</th>
+										</tr>
+									</thead>
+									<tbody>
+										{{#each data}} 
+											<tr>
+											<td>{{Brand}}</td>
+											<td>{{Total_SKUs_in_Shop}}</td>
+											<td>{{Ranking_by_SKU}}</td>
+											<td>{{Total_Promo_SKUs}}</td>
+											<td>{{Full_Price}}</td>
+											<td>{{Discount_0_20}}</td>
+											<td>{{Discount_20_50}}</td>
+											<td>{{Over_50_Discount}}</td>
+											</tr>
+										{{/each}}
+									</tbody>
+								</table>
+							</div>
+						{{/each}}
+					</div>
+				{{/each}}
+				</div>
+				</div>
+			</div>
+</section>
+
+
+{{!-- Category & Pricing Overview --}}
+
+<section id="category-pricing-overview">
+
+	<div id="page2" class="page">
+			<div class="card">
+				<div class="card-header d-flex justify-content-between">
+					<div class="header-title">
+            {{{heading "h2" id="title25" class="card-title text-left"  content="Category & Pricing Overview" }}}
+					</div>
+				</div>
+				<div class="card-body">
+					
+          <h4><em>The Category & Pricing Overview section provides a detailed analysis of product categories and pricing trends across different countries. It includes a breakdown of main categories and subcategories, presenting key metrics such as the number of models, SKU percentage, and price ranges (entry, average, and maximum) to facilitate comparative insights.</em></h4>
+				   <br></br>
+					{{#each subCategoryData}}
+					<div class="table-responsive">
+						<h2 class="text-left country-section">Country: {{@key}}</h2>
+            <br></br>
+						{{#each this.Main_Category}}
+							<div class="category-section">
+								<h3 class="text-left">Main Category: {{this.name}}</h3>
+								<br></br>
+                <table id="datatable" class="table table-bordered table-light">
+									<thead>
+										<tr>
+											<th>Sub Category</th>
+											<th>Number of Models</th>
+											<th>SKU Percentage (%)</th>
+											<th>Entry Prices</th>
+											<th>Average Prices</th>
+											<th>Max Prices</th>
+										</tr>
+									</thead>
+									<tbody>
+										{{#each this.Sub_Category}}
+											<tr>
+												<td>{{this.name}}</td>
+												<td>{{this.Number_of_Models}}</td>
+												<td>{{this.SKU_Percentage}}</td>
+												<td>{{this.Entry_Prices}}</td>
+												<td>{{this.Average_Prices}}</td>
+												<td>{{this.Max_Prices}}</td>
+											</tr>
+										{{/each}}
+									</tbody>
+								</table>
+							</div>
+						{{/each}}
+					</div>
+				{{/each}}
+				</div>
+				</div>
+			</div>
+</section>
+
+
+{{!-- end page --}}
+
+ <section class="cover-page">
+  <div class="top-banner">
+  <img  src="{#asset ./assets/competitoor_logo_posi.svg @encoding=dataURI}" alt="Competitoor Logo" />
+</div>
+
+
+  <div class="content">
+   <div class="stcontent" 
+        style="position: relative;  color: #000000; text-align: center; width: 100%; 
+                transform: translateY(-50%); margin-bottom:100px">
+      <h3 class="text-left" style="font-size:40px">Italy</h3>
+      <p class="text-left" style="font-size:40px">Via Svoto Cattania 1/A, 41012<br>Carpi (MO)</p>
+      <h3 class="text-left" style="font-size:40px">U.S.A.</h3>
+      <p class="text-left" style="font-size:40px">9595 Six Pines, The Woodlands,<br>Houston, TX 77380</p>
+   </div>
+
+    <div class="circle-container">
+      <!-- Ensure this image is only referenced once and it's the correct one -->
+      <img class="circle-image prepared-text" src="{#asset ./assets/abstract-business-background.jpg @encoding=dataURI}" alt="Cover Image" />
+    </div>
+  </div>
+
+  <div class="footer">
+    <a class="website-link" href="https://competitoor.com" target="_blank">competitoor.com</a>
+  </div>
+</section>
+
+
+</body>
+</html>

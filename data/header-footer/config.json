@@ -1,0 +1,26 @@
+{
+    "_id": "67bd6b2fd0b5ef316cec6143",
+    "name": "header-footer",
+    "engine": "handlebars",
+    "recipe": "chrome-pdf",
+    "shortid": "DBJ4ij3Xo",
+    "chrome": {
+        "printBackground": true
+    },
+    "creationDate": {
+        "$$date": 1740466991230
+    },
+    "modificationDate": {
+        "$$date": 1740657412036
+    },
+    "workspaceId": "678e53900e46f951f9c21913",
+    "pdfOperations": [
+        {
+            "type": "merge",
+            "mergeWholeDocument": true
+        }
+    ],
+    "inheritedReadPermissions": [],
+    "inheritedEditPermissions": [],
+    "$entitySet": "templates"
+}

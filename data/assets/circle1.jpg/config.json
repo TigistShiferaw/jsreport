@@ -1,0 +1,16 @@
+{
+    "_id": "67a4580d54110bdb664bf632",
+    "name": "circle1.jpg",
+    "creationDate": {
+        "$$date": 1738823693780
+    },
+    "modificationDate": {
+        "$$date": 1740657412065
+    },
+    "shortid": "jwBncK3",
+    "workspaceId": "678e53900e46f951f9c21913",
+    "inheritedReadPermissions": [],
+    "inheritedEditPermissions": [],
+    "$entitySet": "assets",
+    "link": ""
+}

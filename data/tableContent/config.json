@@ -1,0 +1,16 @@
+{
+    "_id": "67c0508f0b18fe8628a82ef0",
+    "name": "tableContent",
+    "scope": "template",
+    "shortid": "YRlpUHQKfQ",
+    "creationDate": {
+        "$$date": 1740657412076
+    },
+    "modificationDate": {
+        "$$date": 1740666426386
+    },
+    "workspaceId": "678e53900e46f951f9c21913",
+    "inheritedReadPermissions": [],
+    "inheritedEditPermissions": [],
+    "$entitySet": "scripts"
+}

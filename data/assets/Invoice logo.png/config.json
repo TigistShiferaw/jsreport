@@ -1,0 +1,15 @@
+{
+    "_id": "678e53900e46f951f9c21918",
+    "name": "Invoice logo.png",
+    "modificationDate": {
+        "$$date": 1740657412052
+    },
+    "shortid": "fISjvLq",
+    "workspaceId": "678e53900e46f951f9c21913",
+    "creationDate": {
+        "$$date": 1737380752767
+    },
+    "inheritedReadPermissions": [],
+    "inheritedEditPermissions": [],
+    "$entitySet": "assets"
+}

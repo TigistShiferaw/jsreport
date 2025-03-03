@@ -1,0 +1,15 @@
+{
+    "_id": "678f8e620e46f951f9c21b30",
+    "name": "shop-icon.png",
+    "creationDate": {
+        "$$date": 1737461346735
+    },
+    "modificationDate": {
+        "$$date": 1740657412056
+    },
+    "shortid": "N27gs9B",
+    "workspaceId": "678e53900e46f951f9c21913",
+    "inheritedReadPermissions": [],
+    "inheritedEditPermissions": [],
+    "$entitySet": "assets"
+}

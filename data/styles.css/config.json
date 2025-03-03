@@ -1,0 +1,15 @@
+{
+    "_id": "67bc146dd0b5ef316cec5df7",
+    "name": "styles.css",
+    "creationDate": {
+        "$$date": 1740379245315
+    },
+    "modificationDate": {
+        "$$date": 1740657412048
+    },
+    "shortid": "EGO2K61",
+    "workspaceId": "678e53900e46f951f9c21913",
+    "inheritedReadPermissions": [],
+    "inheritedEditPermissions": [],
+    "$entitySet": "assets"
+}

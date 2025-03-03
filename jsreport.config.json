@@ -23,7 +23,7 @@
     }
   },
   "trustUserCode": true,
-  "reportTimeout": 60000,
+  "reportTimeout": 80000,
   "workers": {
     "numberOfWorkers": 2
   },
@@ -39,9 +39,12 @@
       "enabled": true
     },
     "sample-template": {
-      "createSamples": true
+      "createSamples": false
     },
     "api": {
+      "enabled": true
+    },
+    "pdf-utils": {
       "enabled": true
     }
   }

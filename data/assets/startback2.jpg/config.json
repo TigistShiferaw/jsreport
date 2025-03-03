@@ -1,0 +1,15 @@
+{
+    "_id": "67a455de54110bdb664bf624",
+    "name": "startback2.jpg",
+    "creationDate": {
+        "$$date": 1738823134540
+    },
+    "modificationDate": {
+        "$$date": 1740657412064
+    },
+    "shortid": "mmM0hht",
+    "workspaceId": "678e53900e46f951f9c21913",
+    "inheritedReadPermissions": [],
+    "inheritedEditPermissions": [],
+    "$entitySet": "assets"
+}

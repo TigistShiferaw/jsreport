@@ -1,0 +1,16 @@
+{
+    "_id": "678e53900e46f951f9c21915",
+    "name": "assets",
+    "creationDate": {
+        "$$date": 1737380752643
+    },
+    "modificationDate": {
+        "$$date": 1740657411974
+    },
+    "shortid": "IlW-mSN",
+    "workspaceId": "678e53900e46f951f9c21913",
+    "inheritedReadPermissions": [],
+    "inheritedEditPermissions": [],
+    "$entitySet": "folders",
+    "visibilityPermissions": []
+}

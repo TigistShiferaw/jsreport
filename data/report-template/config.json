@@ -1,0 +1,54 @@
+{
+    "_id": "678e53900e46f951f9c21914",
+    "data": {
+        "shortid": "B1Ns-r1M"
+    },
+    "engine": "handlebars",
+    "generatedReportsCounter": null,
+    "images": [],
+    "isExample": true,
+    "modificationDate": {
+        "$$date": 1741006527231
+    },
+    "name": "report-template",
+    "phantom": {
+        "margin": "",
+        "header": "",
+        "headerHeight": "",
+        "footer": "",
+        "footerHeight": ""
+    },
+    "recipe": "chrome-pdf",
+    "shortid": "l1DbOPsN5",
+    "workspaceShortid": "l1DbOPsN5",
+    "workspaceVersion": 1,
+    "worskpaceVersion": 1,
+    "workspaceId": "678e53900e46f951f9c21913",
+    "chrome": {
+        "printBackground": true,
+        "marginTop": "1cm",
+        "marginRight": "",
+        "marginBottom": "",
+        "marginLeft": "",
+        "landscape": false,
+        "displayHeaderFooter": false
+    },
+    "creationDate": {
+        "$$date": 1737380752630
+    },
+    "pdfOperations": [
+        {
+            "type": "merge",
+            "mergeWholeDocument": true,
+            "templateShortid": "DBJ4ij3Xo"
+        }
+    ],
+    "inheritedReadPermissions": [],
+    "inheritedEditPermissions": [],
+    "$entitySet": "templates",
+    "scripts": [
+        {
+            "shortid": "YRlpUHQKfQ"
+        }
+    ]
+}

@@ -1,0 +1,15 @@
+{
+    "_id": "67bc13a7d0b5ef316cec5deb",
+    "name": "UI",
+    "creationDate": {
+        "$$date": 1740379047968
+    },
+    "modificationDate": {
+        "$$date": 1740657412011
+    },
+    "shortid": "wsJfb0r",
+    "workspaceId": "678e53900e46f951f9c21913",
+    "inheritedReadPermissions": [],
+    "inheritedEditPermissions": [],
+    "$entitySet": "folders"
+}

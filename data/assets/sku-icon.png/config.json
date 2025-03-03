@@ -1,0 +1,15 @@
+{
+    "_id": "678f8e530e46f951f9c21b2f",
+    "name": "sku-icon.png",
+    "creationDate": {
+        "$$date": 1737461331646
+    },
+    "modificationDate": {
+        "$$date": 1740657412054
+    },
+    "shortid": "Wi4yhaP",
+    "workspaceId": "678e53900e46f951f9c21913",
+    "inheritedReadPermissions": [],
+    "inheritedEditPermissions": [],
+    "$entitySet": "assets"
+}
